@@ -1,0 +1,28 @@
+{
+    "type": "Domain",
+    "domainType": "VerticalProfile",
+    "axes": {
+        "x": {
+            "values": [
+                1.0
+            ]
+        },
+        "y": {
+            "values": [
+                21.0
+            ]
+        },
+        "z": {
+            "values": [
+                1.0,
+                5.0,
+                20.0
+            ]
+        },
+        "t": {
+            "values": [
+                "2008-01-01T04:00:00Z"
+            ]
+        }
+    }
+}

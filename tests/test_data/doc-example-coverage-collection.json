@@ -1,0 +1,159 @@
+{
+    "type": "CoverageCollection",
+    "domainType": "VerticalProfile",
+    "coverages": [
+        {
+            "type": "Coverage",
+            "domain": {
+                "type": "Domain",
+                "axes": {
+                    "x": {
+                        "values": [
+                            -10.1
+                        ]
+                    },
+                    "y": {
+                        "values": [
+                            -40.2
+                        ]
+                    },
+                    "z": {
+                        "values": [
+                            5.0,
+                            8.0,
+                            14.0
+                        ]
+                    },
+                    "t": {
+                        "values": [
+                            "2013-01-13T11:12:20Z"
+                        ]
+                    }
+                }
+            },
+            "ranges": {
+                "PSAL": {
+                    "type": "NdArray",
+                    "dataType": "float",
+                    "axisNames": [
+                        "z"
+                    ],
+                    "shape": [
+                        3
+                    ],
+                    "values": [
+                        43.7,
+                        43.8,
+                        43.9
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Coverage",
+            "domain": {
+                "type": "Domain",
+                "axes": {
+                    "x": {
+                        "values": [
+                            -11.1
+                        ]
+                    },
+                    "y": {
+                        "values": [
+                            -45.2
+                        ]
+                    },
+                    "z": {
+                        "values": [
+                            4.0,
+                            7.0,
+                            9.0
+                        ]
+                    },
+                    "t": {
+                        "values": [
+                            "2013-01-13T12:12:20Z"
+                        ]
+                    }
+                }
+            },
+            "ranges": {
+                "PSAL": {
+                    "type": "NdArray",
+                    "dataType": "float",
+                    "axisNames": [
+                        "z"
+                    ],
+                    "shape": [
+                        3
+                    ],
+                    "values": [
+                        42.7,
+                        41.8,
+                        40.9
+                    ]
+                }
+            }
+        }
+    ],
+    "parameters": {
+        "PSAL": {
+            "type": "Parameter",
+            "description": {
+                "en": "The measured salinity, in practical salinity units (psu) of the sea water"
+            },
+            "observedProperty": {
+                "id": "http://vocab.nerc.ac.uk/standard_name/sea_water_salinity/",
+                "label": {
+                    "en": "Sea Water Salinity"
+                }
+            },
+            "unit": {
+                "symbol": "psu"
+            }
+        }
+    },
+    "referencing": [
+        {
+            "coordinates": [
+                "x",
+                "y"
+            ],
+            "system": {
+                "type": "GeographicCRS",
+                "id": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            }
+        },
+        {
+            "coordinates": [
+                "z"
+            ],
+            "system": {
+                "type": "VerticalCRS",
+                "cs": {
+                    "csAxes": [
+                        {
+                            "name": {
+                                "en": "Pressure"
+                            },
+                            "direction": "down",
+                            "unit": {
+                                "symbol": "Pa"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "coordinates": [
+                "t"
+            ],
+            "system": {
+                "type": "TemporalRS",
+                "calendar": "Gregorian"
+            }
+        }
+    ]
+}

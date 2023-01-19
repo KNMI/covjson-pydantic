@@ -1,0 +1,118 @@
+{
+    "type": "Coverage",
+    "domain": {
+        "type": "Domain",
+        "domainType": "PointSeries",
+        "axes": {
+            "x": {
+                "values": [
+                    5.3
+                ]
+            },
+            "y": {
+                "values": [
+                    53.2
+                ]
+            },
+            "t": {
+                "values": [
+                    "2022-01-01T04:10:00Z",
+                    "2022-01-01T04:20:00Z",
+                    "2022-01-01T04:30:00Z",
+                    "2022-01-01T04:40:00Z",
+                    "2022-01-01T04:50:00Z",
+                    "2022-01-01T05:00:00Z"
+                ]
+            }
+        }
+    },
+    "parameters": {
+        "temperature": {
+            "type": "Parameter",
+            "description": {
+                "en": "This is the air temperature"
+            },
+            "observedProperty": {
+                "label": {
+                    "en": "temperature"
+                }
+            },
+            "unit": {
+                "label": {
+                    "en": "Degree Celsius"
+                },
+                "symbol": {
+                    "value": "Cel",
+                    "type": "http://www.opengis.net/def/uom/UCUM"
+                }
+            }
+        },
+        "dewpoint": {
+            "type": "Parameter",
+            "description": {
+                "en": "This is the air dewpoint"
+            },
+            "observedProperty": {
+                "label": {
+                    "en": "dewpoint"
+                }
+            },
+            "unit": {
+                "label": {
+                    "en": "Degree Celsius"
+                },
+                "symbol": {
+                    "value": "Cel",
+                    "type": "http://www.opengis.net/def/uom/UCUM"
+                }
+            }
+        }
+    },
+    "ranges": {
+        "temperature": {
+            "type": "NdArray",
+            "dataType": "float",
+            "axisNames": [
+                "x",
+                "y",
+                "t"
+            ],
+            "shape": [
+                1,
+                1,
+                6
+            ],
+            "values": [
+                64.27437704538298,
+                64.70702358086481,
+                65.13680141101983,
+                65.56289242989419,
+                65.98448554858814,
+                66.40077824091921
+            ]
+        },
+        "dewpoint": {
+            "type": "NdArray",
+            "dataType": "float",
+            "axisNames": [
+                "x",
+                "y",
+                "t"
+            ],
+            "shape": [
+                1,
+                1,
+                6
+            ],
+            "values": [
+                62.27437704538298,
+                62.707023580864806,
+                63.136801411019825,
+                63.56289242989419,
+                63.98448554858814,
+                64.40077824091921
+            ]
+        }
+    },
+    "extra:extra": "extra fields allowed"
+}

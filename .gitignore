@@ -1,0 +1,26 @@
+# Code Editors
+## Jet Brains
+.idea/
+.run/
+__pycache__/
+
+# Python
+## MyPy
+.mypy_cache
+## Virtual Environment
+venv/
+
+# unit test results
+.coverage
+.pytest_cache
+TEST-*-*.xml
+coverage.json
+coverage.xml
+htmlcov/
+junit-report.xml
+
+# Ignore package
+*.egg-info/
+.env
+build/
+dist/

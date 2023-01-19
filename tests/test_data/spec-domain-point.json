@@ -1,0 +1,26 @@
+{
+    "type": "Domain",
+    "domainType": "Point",
+    "axes": {
+        "x": {
+            "values": [
+                1.0
+            ]
+        },
+        "y": {
+            "values": [
+                20.0
+            ]
+        },
+        "z": {
+            "values": [
+                1.8
+            ]
+        },
+        "t": {
+            "values": [
+                "2008-01-01T04:00:00Z"
+            ]
+        }
+    }
+}

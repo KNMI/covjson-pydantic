@@ -1,0 +1,30 @@
+{
+    "type": "IdentifierRS",
+    "id": "https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2",
+    "label": {
+        "en": "ISO 3166-1 alpha-2 codes"
+    },
+    "targetConcept": {
+        "id": "http://dbpedia.org/resource/Country",
+        "label": {
+            "en": "Country",
+            "de": "Land"
+        }
+    },
+    "identifiers": {
+        "de": {
+            "id": "http://dbpedia.org/resource/Germany",
+            "label": {
+                "de": "Deutschland",
+                "en": "Germany"
+            }
+        },
+        "gb": {
+            "id": "http://dbpedia.org/resource/United_Kingdom",
+            "label": {
+                "de": "Vereinigtes Konigreich",
+                "en": "United Kingdom"
+            }
+        }
+    }
+}

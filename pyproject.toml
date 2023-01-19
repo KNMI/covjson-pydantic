@@ -1,0 +1,51 @@
+[project]
+name = "covjson-pydantic"
+description = "The Pydantic models for CoverageJSON"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {file = "LICENSE"}
+authors = [
+    {name = "KNMI Data Platform Team", email = "opendata@knmi.nl"},
+]
+keywords = ["covjson", "Pydantic"]
+classifiers = [
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: GIS",
+    "Typing :: Typed",
+]
+version = "0.1.0"
+dependencies = ["pydantic>=1,<2", "orjson>=3"]
+
+[project.optional-dependencies]
+test = ["pytest", "PyHamcrest", "pytest-cov"]
+dev = ["pre-commit"]
+
+[project.urls]
+Source = "https://github.com/knmi/covjson-pydantic"
+
+[build-system]
+requires = ["flit>=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.module]
+name = "covjson_pydantic"
+
+[tool.flit.sdist]
+exclude = [
+    "test/",
+    ".github/",
+]
+
+[tool.mypy]
+plugins = [
+  "pydantic.mypy"
+]
+
+[tool.pydantic-mypy]
+warn_untyped_fields = true
