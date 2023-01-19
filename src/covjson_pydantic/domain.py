@@ -94,12 +94,12 @@ class Domain(CovJsonBaseModel):
         for axis_name in required_axes:
             axis = getattr(axes, axis_name)
             if axis is None:
-                raise ValueError(f"A {domain_type} must have a '{axis_name}'-axis.")
+                raise ValueError(f"A '{domain_type.value}' must have a '{axis_name}'-axis.")
             if axis_name in single_value_axes:
                 if not (isinstance(axis, ValuesAxis) and len(axis.values) == 1):
                     raise ValueError(
                         f"The 'values' field of the '{axis_name}'-axis "
-                        f"of a '{domain_type}' domain must contain a single value."
+                        f"of a '{domain_type.value}' domain must contain a single value."
                     )
 
         # Check allowed axes
@@ -107,7 +107,7 @@ class Domain(CovJsonBaseModel):
         for axis_name in all_axis - required_axes - allowed_axes:
             axis = getattr(axes, axis_name)
             if axis is not None:
-                raise ValueError(f"A {domain_type} domain can not have a '{axis_name}'-axis.")
+                raise ValueError(f"A '{domain_type.value}' domain can not have a '{axis_name}'-axis.")
 
         # Check for single value of allowed axes
         for axis_name in allowed_axes:
@@ -116,7 +116,7 @@ class Domain(CovJsonBaseModel):
                 if not (isinstance(axis, ValuesAxis) and len(axis.values) == 1):
                     raise ValueError(
                         f"If provided, the 'values' field of the '{axis_name}'-axis "
-                        f"of a '{domain_type}' domain must contain a single value."
+                        f"of a '{domain_type.value}' domain must contain a single value."
                     )
 
     @root_validator(skip_on_failure=True)

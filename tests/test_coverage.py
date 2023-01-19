@@ -51,13 +51,13 @@ def test_happy_cases(file_name, object_type):
 
 
 error_cases = [
-    ("grid-domain-no-y.json", Domain, r"A Grid must have a 'y'-axis"),
+    ("grid-domain-no-y.json", Domain, r"A 'Grid' must have a 'y'-axis"),
     (
         "point-series-domain-more-z.json",
         Domain,
         r"If provided, the 'values' field of the 'z'-axis of a 'PointSeries' domain must contain a single value.",
     ),
-    ("point-series-domain-no-t.json", Domain, r"A PointSeries must have a 't'-axis."),
+    ("point-series-domain-no-t.json", Domain, r"A 'PointSeries' must have a 't'-axis."),
 ]
 
 
