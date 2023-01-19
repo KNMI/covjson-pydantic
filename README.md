@@ -36,22 +36,22 @@ pip install git+https://github.com/KNMI/covjson-pydantic.git
 
 ```python
 import datetime
-from covjson_pydantic.coverage_json import Coverage
+from covjson_pydantic.coverage import Coverage
 from covjson_pydantic.domain import Domain
 from covjson_pydantic.ndarray import NdArray
 
 c = Coverage(
-        domain=Domain(
-            domainType="PointSeries",
-            axes={
-                "x": {"dataType": "float", "values": [1.23]},
-                "y": {"values": [4.56]},
-                "t": {"dataType": "datetime", "values": [datetime.datetime.now()]}
-            },
-        ),
-        ranges={
-            "temperature": NdArray(axisNames=["x", "y", "t"], shape=[1, 1, 1], values=[42.0])
-        }
+    domain=Domain(
+        domainType="PointSeries",
+        axes={
+            "x": {"dataType": "float", "values": [1.23]},
+            "y": {"values": [4.56]},
+            "t": {"dataType": "datetime", "values": [datetime.datetime.now()]}
+        },
+    ),
+    ranges={
+        "temperature": NdArray(axisNames=["x", "y", "t"], shape=[1, 1, 1], values=[42.0])
+    }
 )
 print(c.json(exclude_none=True))
 ```
@@ -124,8 +124,10 @@ This library is used to build an Environmental Data Retrieval (EDR) API, serving
 
 ## TODOs
 Help is wanted in the following areas to fully implement the CovJSON spec:
-* The following domain types have limited support:
-* The following domain types are not supported:
+* The polygon based domain types are not supported.
+* The `Trajectory` and `Section` domain type are not supported.
+* The `NdArray` only supports `float` data.
+* Not all requirements in the spec relating different fields are implemented.
 
 ## License
 

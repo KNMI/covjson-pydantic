@@ -2,8 +2,8 @@ import json
 from pathlib import Path
 
 import pytest
-from covjson_pydantic.coverage_json import Coverage
-from covjson_pydantic.coverage_json import CoverageCollection
+from covjson_pydantic.coverage import Coverage
+from covjson_pydantic.coverage import CoverageCollection
 from covjson_pydantic.domain import Axes
 from covjson_pydantic.domain import Domain
 from covjson_pydantic.ndarray import NdArray
@@ -21,7 +21,7 @@ happy_cases = [
     ("spec-vertical-profile-coverage.json", Coverage),
     ("doc-example-coverage-collection.json", CoverageCollection),
     ("grid-domain.json", Domain),
-    ("point-series-domain.json", Domain),  # TODO: Remove the custom knmi stuff from the JSON file
+    ("point-series-domain-custom.json", Domain),
     ("spec-domain-grid.json", Domain),
     ("spec-domain-vertical-profile.json", Domain),
     ("spec-domain-point-series.json", Domain),
