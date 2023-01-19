@@ -13,7 +13,7 @@
   <a href="https://pypistats.org/packages/covjson-pydantic" target="_blank">
       <img src="https://img.shields.io/pypi/dm/covjson-pydantic.svg" alt="Downloads">
   </a>
-  <a href="https://github.com/knmi/covjson-pydantic/blob/main/LICENSE" target="_blank">
+  <a href="https://github.com/knmi/covjson-pydantic/blob/master/LICENSE" target="_blank">
       <img src="https://img.shields.io/github/license/knmi/covjson-pydantic.svg" alt="License">
   </a>
 </p>
