@@ -1,7 +1,7 @@
 import datetime
 import json
 
-from covjson_pydantic.coverage_json import Coverage
+from covjson_pydantic.coverage import Coverage
 from covjson_pydantic.domain import Domain
 from covjson_pydantic.ndarray import NdArray
 
