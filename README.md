@@ -53,7 +53,7 @@ c = Coverage(
         "temperature": NdArray(axisNames=["x", "y", "t"], shape=[1, 1, 1], values=[42.0])
     }
 )
-print(c.json(exclude_none=True))
+print(c.json(exclude_none=True,indent=True))
 ```
 Will print
 ```json
