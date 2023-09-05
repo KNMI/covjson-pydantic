@@ -6,6 +6,7 @@ from typing import Union
 
 from pydantic import AnyUrl
 from pydantic import Extra
+from pydantic import model_validator
 from pydantic.class_validators import root_validator
 
 from .base_models import BaseModel
@@ -13,26 +14,27 @@ from .i18n import i18n
 
 
 class TargetConcept(BaseModel):
-    id: Optional[str]  # Not in spec, but needed for example in spec for 'Identifier-based Reference Systems'
+    id: Optional[str] = None  # Not in spec, but needed for example in spec for 'Identifier-based Reference Systems'
     label: i18n
-    description: Optional[i18n]
+    description: Optional[i18n] = None
 
 
 class ReferenceSystem(BaseModel, extra=Extra.allow):
     type: Literal["GeographicCRS", "ProjectedCRS", "VerticalCRS", "TemporalRS", "IdentifierRS"]
-    id: Optional[str]
-    description: Optional[i18n]
+    id: Optional[str] = None
+    description: Optional[i18n] = None
 
     # Only for TemporalRS
-    calendar: Optional[Union[Literal["Gregorian"], AnyUrl]]
-    timeScale: Optional[AnyUrl]  # noqa: N815
+    calendar: Optional[Union[Literal["Gregorian"], AnyUrl]] = None
+    timeScale: Optional[AnyUrl] = None  # noqa: N815
 
     # Only for IdentifierRS
-    label: Optional[i18n]
-    targetConcept: Optional[TargetConcept]  # noqa: N815
-    identifiers: Optional[Dict[str, TargetConcept]]
+    label: Optional[i18n] = None
+    targetConcept: Optional[TargetConcept] = None  # noqa: N815
+    identifiers: Optional[Dict[str, TargetConcept]] = None
 
-    @root_validator(skip_on_failure=True)
+    @model_validator(skip_on_failure=True)
+    @classmethod
     def check_type_specific_fields(cls, values):
         if values["type"] != "TemporalRS" and (
             values.get("calendar") is not None or values.get("timeScale") is not None

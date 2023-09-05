@@ -5,6 +5,7 @@ from typing import Optional
 from typing import Union
 
 from pydantic import Extra
+from pydantic import model_validator
 from pydantic.class_validators import root_validator
 
 from .base_models import BaseModel
@@ -15,14 +16,15 @@ from .unit import Unit
 
 class Parameter(BaseModel, extra=Extra.allow):
     type: Literal["Parameter"] = "Parameter"
-    id: Optional[str]
-    label: Optional[i18n]
-    description: Optional[i18n]
+    id: Optional[str] = None
+    label: Optional[i18n] = None
+    description: Optional[i18n] = None
     observedProperty: ObservedProperty  # noqa: N815
-    categoryEncoding: Optional[Dict[str, Union[int, List[int]]]]  # noqa: N815
-    unit: Optional[Unit]
+    categoryEncoding: Optional[Dict[str, Union[int, List[int]]]] = None  # noqa: N815
+    unit: Optional[Unit] = None
 
-    @root_validator(skip_on_failure=True)
+    @model_validator(skip_on_failure=True)
+    @classmethod
     def must_not_have_unit_if_observed_property_has_categories(cls, values):
         if (
             values.get("unit") is not None
@@ -39,13 +41,14 @@ class Parameter(BaseModel, extra=Extra.allow):
 
 class ParameterGroup(BaseModel, extra=Extra.allow):
     type: Literal["ParameterGroup"] = "ParameterGroup"
-    id: Optional[str]
-    label: Optional[i18n]
-    description: Optional[i18n]
-    observedProperty: Optional[ObservedProperty]  # noqa: N815
+    id: Optional[str] = None
+    label: Optional[i18n] = None
+    description: Optional[i18n] = None
+    observedProperty: Optional[ObservedProperty] = None  # noqa: N815
     members: List[str]
 
-    @root_validator(skip_on_failure=True)
+    @model_validator(skip_on_failure=True)
+    @classmethod
     def must_have_label_and_or_observed_property(cls, values):
         if values.get("label") is None and values.get("observedProperty") is None:
             raise ValueError(

@@ -8,11 +8,11 @@ from .i18n import i18n
 class Category(BaseModel):
     id: str
     label: i18n
-    description: Optional[i18n]
+    description: Optional[i18n] = None
 
 
 class ObservedProperty(BaseModel):
-    id: Optional[str]
+    id: Optional[str] = None
     label: i18n
-    description: Optional[i18n]
-    categories: Optional[List[Category]]
+    description: Optional[i18n] = None
+    categories: Optional[List[Category]] = None

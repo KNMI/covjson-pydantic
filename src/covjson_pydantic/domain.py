@@ -8,10 +8,11 @@ from typing import Tuple
 from typing import TypeVar
 from typing import Union
 
-from pydantic import Extra
+from pydantic import BaseModel
+from pydantic import ConfigDict
+from pydantic import model_validator
 from pydantic import PositiveInt
 from pydantic.class_validators import root_validator
-from pydantic.generics import GenericModel
 
 from .base_models import BaseModel
 from .base_models import CovJsonBaseModel
@@ -23,7 +24,8 @@ class CompactAxis(BaseModel):
     stop: float
     num: PositiveInt
 
-    @root_validator(skip_on_failure=True)
+    @model_validator(skip_on_failure=True)
+    @classmethod
     def single_value_case(cls, values):
         if values["num"] == 1 and values["start"] != values["stop"]:
             raise ValueError("If the value of 'num' is 1, then 'start' and 'stop' MUST have identical values.")
@@ -33,20 +35,17 @@ class CompactAxis(BaseModel):
 ValuesT = TypeVar("ValuesT")
 
 
-class ValuesAxis(GenericModel, Generic[ValuesT]):
+class ValuesAxis(BaseModel, Generic[ValuesT]):
     dataType: Optional[str]  # noqa: N815
     coordinates: Optional[List[str]]
     values: List[ValuesT]
     bounds: Optional[List[ValuesT]]
+    model_config = ConfigDict(
+        str_strip_whitespace=True, str_min_length=1, extra="allow", validate_default=True, validate_assignment=True
+    )
 
-    class Config:
-        anystr_strip_whitespace = True
-        min_anystr_length = 1
-        extra = Extra.allow  # allow custom members
-        validate_all = True
-        validate_assignment = True
-
-    @root_validator(skip_on_failure=True)
+    @model_validator(skip_on_failure=True)
+    @classmethod
     def bounds_length(cls, values):
         if values["bounds"] is not None and len(values["bounds"]) != 2 * len(values["values"]):
             raise ValueError("If provided, the length of 'bounds' should be twice that of 'values'.")
@@ -63,13 +62,14 @@ class DomainType(str, Enum):
 
 
 class Axes(BaseModel):
-    x: Optional[Union[ValuesAxis[float], CompactAxis]]
-    y: Optional[Union[ValuesAxis[float], CompactAxis]]
-    z: Optional[Union[ValuesAxis[float], CompactAxis]]
-    t: Optional[ValuesAxis[datetime]]
-    composite: Optional[ValuesAxis[Tuple]]
+    x: Optional[Union[ValuesAxis[float], CompactAxis]] = None
+    y: Optional[Union[ValuesAxis[float], CompactAxis]] = None
+    z: Optional[Union[ValuesAxis[float], CompactAxis]] = None
+    t: Optional[ValuesAxis[datetime]] = None
+    composite: Optional[ValuesAxis[Tuple]] = None
 
-    @root_validator(skip_on_failure=True)
+    @model_validator(skip_on_failure=True)
+    @classmethod
     def at_least_one_axes(cls, values):
         if (
             values["x"] is None
@@ -84,9 +84,9 @@ class Axes(BaseModel):
 
 class Domain(CovJsonBaseModel):
     type: Literal["Domain"] = "Domain"
-    domainType: Optional[DomainType]  # noqa: N815
+    domainType: Optional[DomainType] = None  # noqa: N815
     axes: Axes
-    referencing: Optional[List[ReferenceSystemConnectionObject]]
+    referencing: Optional[List[ReferenceSystemConnectionObject]] = None
 
     @staticmethod
     def check_axis(domain_type, axes, required_axes, allowed_axes, single_value_axes):
@@ -119,7 +119,8 @@ class Domain(CovJsonBaseModel):
                         f"of a '{domain_type.value}' domain must contain a single value."
                     )
 
-    @root_validator(skip_on_failure=True)
+    @model_validator(skip_on_failure=True)
+    @classmethod
     def check_domain_consistent(cls, values):
         domain_type = values.get("domainType")
         axes = values.get("axes")

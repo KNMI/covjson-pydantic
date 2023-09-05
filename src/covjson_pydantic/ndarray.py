@@ -5,6 +5,7 @@ from typing import Literal
 from typing import Optional
 
 from pydantic import AnyUrl
+from pydantic import model_validator
 from pydantic.class_validators import root_validator
 
 from .base_models import BaseModel
@@ -19,11 +20,12 @@ class DataType(str, Enum):
 class NdArray(CovJsonBaseModel):
     type: Literal["NdArray"] = "NdArray"
     dataType: DataType = DataType.float  # noqa: N815
-    axisNames: Optional[List[str]]  # noqa: N815
-    shape: Optional[List[int]]
+    axisNames: Optional[List[str]] = None  # noqa: N815
+    shape: Optional[List[int]] = None
     values: List[Optional[float]]
 
-    @root_validator(skip_on_failure=True)
+    @model_validator(skip_on_failure=True)
+    @classmethod
     def check_field_dependencies(cls, values):
         if len(values["values"]) > 1 and (values.get("axisNames") is None or len(values.get("axisNames")) == 0):
             raise ValueError("'axisNames' must to be provided if array is not 0D")

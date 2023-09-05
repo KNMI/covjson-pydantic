@@ -1,6 +1,6 @@
 import orjson
 from pydantic import BaseModel as PydanticBaseModel
-from pydantic import Extra
+from pydantic import ConfigDict
 
 
 def orjson_dumps(v, *, default, indent=None, sort_keys=False):
@@ -16,17 +16,18 @@ def orjson_dumps(v, *, default, indent=None, sort_keys=False):
 
 
 class BaseModel(PydanticBaseModel):
-    class Config:
-        anystr_strip_whitespace = True
-        min_anystr_length = 1
-        extra = Extra.forbid
-        validate_all = True
-        validate_assignment = True
-
-        json_loads = orjson.loads
-        json_dumps = orjson_dumps
+    # TODO[pydantic]: The following keys were removed: `json_loads`, `json_dumps`.
+    # Check https://docs.pydantic.dev/dev-v2/migration/#changes-to-config for more information.
+    model_config = ConfigDict(
+        str_strip_whitespace=True,
+        str_min_length=1,
+        extra="forbid",
+        validate_default=True,
+        validate_assignment=True,
+        json_loads=orjson.loads,
+        json_dumps=orjson_dumps,
+    )
 
 
 class CovJsonBaseModel(BaseModel):
-    class Config:
-        extra = Extra.allow  # allow custom members
+    model_config = ConfigDict(extra="allow")
