@@ -7,7 +7,6 @@ from typing import Union
 from pydantic import AnyUrl
 from pydantic import Extra
 from pydantic import model_validator
-from pydantic.class_validators import root_validator
 
 from .base_models import BaseModel
 from .i18n import i18n
@@ -33,27 +32,22 @@ class ReferenceSystem(BaseModel, extra=Extra.allow):
     targetConcept: Optional[TargetConcept] = None  # noqa: N815
     identifiers: Optional[Dict[str, TargetConcept]] = None
 
-    @model_validator(skip_on_failure=True)
-    @classmethod
-    def check_type_specific_fields(cls, values):
-        if values["type"] != "TemporalRS" and (
-            values.get("calendar") is not None or values.get("timeScale") is not None
-        ):
+    @model_validator(mode="after")
+    def check_type_specific_fields(self):
+        if self.type != "TemporalRS" and (self.calendar is not None or self.timeScale is not None):
             raise ValueError("'calendar' and 'timeScale' fields can only be used for type 'TemporalRS'")
 
-        if values["type"] != "IdentifierRS" and (
-            values.get("label") is not None
-            or values.get("targetConcept") is not None
-            or values.get("identifiers") is not None
+        if self.type != "IdentifierRS" and (
+            self.label is not None or self.targetConcept is not None or self.identifiers is not None
         ):
             raise ValueError(
                 "'label', 'targetConcept' and 'identifiers' fields can only be used for type 'IdentifierRS'"
             )
 
-        if values["type"] == "IdentifierRS" and values.get("targetConcept") is None:
+        if self.type == "IdentifierRS" and self.targetConcept is None:
             raise ValueError("An identifier RS object MUST have a member 'targetConcept'")
 
-        return values
+        return self
 
 
 class ReferenceSystemConnectionObject(BaseModel):
