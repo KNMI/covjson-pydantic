@@ -4,7 +4,6 @@ from typing import Literal
 from typing import Optional
 from typing import Union
 
-from pydantic import Extra
 from pydantic import model_validator
 
 from .base_models import BaseModel
@@ -13,7 +12,7 @@ from .observed_property import ObservedProperty
 from .unit import Unit
 
 
-class Parameter(BaseModel, extra=Extra.allow):
+class Parameter(BaseModel, extra="allow"):
     type: Literal["Parameter"] = "Parameter"
     id: Optional[str] = None
     label: Optional[i18n] = None
@@ -33,7 +32,7 @@ class Parameter(BaseModel, extra=Extra.allow):
         return self
 
 
-class ParameterGroup(BaseModel, extra=Extra.allow):
+class ParameterGroup(BaseModel, extra="allow"):
     type: Literal["ParameterGroup"] = "ParameterGroup"
     id: Optional[str] = None
     label: Optional[i18n] = None

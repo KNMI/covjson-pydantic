@@ -5,7 +5,6 @@ from typing import Optional
 from typing import Union
 
 from pydantic import AnyUrl
-from pydantic import Extra
 from pydantic import model_validator
 
 from .base_models import BaseModel
@@ -18,7 +17,7 @@ class TargetConcept(BaseModel):
     description: Optional[i18n] = None
 
 
-class ReferenceSystem(BaseModel, extra=Extra.allow):
+class ReferenceSystem(BaseModel, extra="allow"):
     type: Literal["GeographicCRS", "ProjectedCRS", "VerticalCRS", "TemporalRS", "IdentifierRS"]
     id: Optional[str] = None
     description: Optional[i18n] = None

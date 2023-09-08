@@ -4,7 +4,6 @@ from typing import List
 from typing import Literal
 from typing import Optional
 
-from pydantic import AnyUrl
 from pydantic import model_validator
 
 from .base_models import BaseModel
@@ -47,7 +46,7 @@ class NdArray(CovJsonBaseModel):
 
 class TileSet(BaseModel):
     tileShape: List[Optional[int]]  # noqa: N815
-    urlTemplate: AnyUrl  # noqa: N815
+    urlTemplate: str  # noqa: N815
 
 
 # TODO: Validation of field dependencies
