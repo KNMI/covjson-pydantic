@@ -1,4 +1,5 @@
-import datetime
+from datetime import datetime
+from datetime import timezone
 
 from covjson_pydantic.coverage import Coverage
 from covjson_pydantic.domain import Domain
@@ -10,7 +11,7 @@ c = Coverage(
         axes={
             "x": {"dataType": "float", "values": [1.23]},
             "y": {"values": [4.56]},
-            "t": {"dataType": "datetime", "values": [datetime.datetime.now()]},
+            "t": {"dataType": "datetime", "values": [datetime.now(tz=timezone.utc)]},
         },
     ),
     ranges={"temperature": NdArray(axisNames=["x", "y", "t"], shape=[1, 1, 1], values=[42.0])},

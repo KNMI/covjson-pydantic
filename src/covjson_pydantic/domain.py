@@ -1,4 +1,3 @@
-from datetime import datetime
 from enum import Enum
 from typing import Generic
 from typing import List
@@ -8,6 +7,7 @@ from typing import Tuple
 from typing import TypeVar
 from typing import Union
 
+from pydantic import AwareDatetime
 from pydantic import ConfigDict
 from pydantic import model_validator
 from pydantic import PositiveInt
@@ -61,7 +61,7 @@ class Axes(BaseModel):
     x: Optional[Union[ValuesAxis[float], CompactAxis]] = None
     y: Optional[Union[ValuesAxis[float], CompactAxis]] = None
     z: Optional[Union[ValuesAxis[float], CompactAxis]] = None
-    t: Optional[ValuesAxis[datetime]] = None
+    t: Optional[ValuesAxis[AwareDatetime]] = None
     composite: Optional[ValuesAxis[Tuple]] = None
 
     @model_validator(mode="after")
