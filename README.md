@@ -35,7 +35,7 @@ pip install git+https://github.com/KNMI/covjson-pydantic.git
 ## Usage
 
 ```python
-import datetime
+from datetime import datetime, timezone
 from covjson_pydantic.coverage import Coverage
 from covjson_pydantic.domain import Domain
 from covjson_pydantic.ndarray import NdArray
@@ -46,14 +46,15 @@ c = Coverage(
         axes={
             "x": {"dataType": "float", "values": [1.23]},
             "y": {"values": [4.56]},
-            "t": {"dataType": "datetime", "values": [datetime.datetime.now()]}
+            "t": {"dataType": "datetime", "values": [datetime.now(tz=timezone.utc)]},
         },
     ),
     ranges={
         "temperature": NdArray(axisNames=["x", "y", "t"], shape=[1, 1, 1], values=[42.0])
     }
 )
-print(c.json(exclude_none=True,indent=True))
+
+print(c.model_dump_json(exclude_none=True, indent=4))
 ```
 Will print
 ```json
@@ -77,7 +78,7 @@ Will print
             "t": {
                 "dataType": "datetime",
                 "values": [
-                    "2023-01-19T13:14:47.126631Z"
+                    "2023-09-08T14:31:41.311717Z"
                 ]
             }
         }
