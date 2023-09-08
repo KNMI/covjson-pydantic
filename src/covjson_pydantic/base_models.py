@@ -3,7 +3,6 @@ from pydantic import ConfigDict
 
 
 class BaseModel(PydanticBaseModel):
-    # Check https://docs.pydantic.dev/dev-v2/migration/#changes-to-config for more information.
     model_config = ConfigDict(
         str_strip_whitespace=True,
         str_min_length=1,
