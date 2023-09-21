@@ -20,7 +20,7 @@ classifiers = [
     "Typing :: Typed",
 ]
 version = "0.2.0"
-dependencies = ["pydantic>=2,<3"]
+dependencies = ["pydantic>=2.3,<3"]
 
 [project.optional-dependencies]
 test = ["pytest", "pytest-cov"]
