@@ -7,17 +7,17 @@ from typing import Union
 from pydantic import AnyUrl
 from pydantic import model_validator
 
-from .base_models import BaseModel
+from .base_models import CovJsonBaseModel
 from .i18n import i18n
 
 
-class TargetConcept(BaseModel):
+class TargetConcept(CovJsonBaseModel):
     id: Optional[str] = None  # Not in spec, but needed for example in spec for 'Identifier-based Reference Systems'
     label: i18n
     description: Optional[i18n] = None
 
 
-class ReferenceSystem(BaseModel, extra="allow"):
+class ReferenceSystem(CovJsonBaseModel, extra="allow"):
     type: Literal["GeographicCRS", "ProjectedCRS", "VerticalCRS", "TemporalRS", "IdentifierRS"]
     id: Optional[str] = None
     description: Optional[i18n] = None
@@ -49,6 +49,6 @@ class ReferenceSystem(BaseModel, extra="allow"):
         return self
 
 
-class ReferenceSystemConnectionObject(BaseModel):
+class ReferenceSystemConnectionObject(CovJsonBaseModel):
     coordinates: List[str]
     system: ReferenceSystem

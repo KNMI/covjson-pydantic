@@ -3,16 +3,16 @@ from typing import Union
 
 from pydantic import model_validator
 
-from .base_models import BaseModel
+from .base_models import CovJsonBaseModel
 from .i18n import i18n
 
 
-class Symbol(BaseModel):
+class Symbol(CovJsonBaseModel):
     value: str
     type: str
 
 
-class Unit(BaseModel):
+class Unit(CovJsonBaseModel):
     id: Optional[str] = None
     label: Optional[i18n] = None
     symbol: Optional[Union[str, Symbol]] = None

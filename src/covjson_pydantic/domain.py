@@ -8,16 +8,14 @@ from typing import TypeVar
 from typing import Union
 
 from pydantic import AwareDatetime
-from pydantic import ConfigDict
 from pydantic import model_validator
 from pydantic import PositiveInt
 
-from .base_models import BaseModel
 from .base_models import CovJsonBaseModel
 from .reference_system import ReferenceSystemConnectionObject
 
 
-class CompactAxis(BaseModel):
+class CompactAxis(CovJsonBaseModel):
     start: float
     stop: float
     num: PositiveInt
@@ -32,14 +30,11 @@ class CompactAxis(BaseModel):
 ValuesT = TypeVar("ValuesT")
 
 
-class ValuesAxis(BaseModel, Generic[ValuesT]):
+class ValuesAxis(CovJsonBaseModel, Generic[ValuesT], extra="allow"):
     dataType: Optional[str] = None  # noqa: N815
     coordinates: Optional[List[str]] = None
     values: List[ValuesT]
     bounds: Optional[List[ValuesT]] = None
-    model_config = ConfigDict(
-        str_strip_whitespace=True, str_min_length=1, extra="allow", validate_default=True, validate_assignment=True
-    )
 
     @model_validator(mode="after")
     def bounds_length(self):
@@ -57,7 +52,7 @@ class DomainType(str, Enum):
     multi_point = "MultiPoint"
 
 
-class Axes(BaseModel):
+class Axes(CovJsonBaseModel):
     x: Optional[Union[ValuesAxis[float], CompactAxis]] = None
     y: Optional[Union[ValuesAxis[float], CompactAxis]] = None
     z: Optional[Union[ValuesAxis[float], CompactAxis]] = None

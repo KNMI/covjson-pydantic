@@ -16,7 +16,7 @@ from .parameter import ParameterGroup
 from .reference_system import ReferenceSystemConnectionObject
 
 
-class Coverage(CovJsonBaseModel):
+class Coverage(CovJsonBaseModel, extra="allow"):
     id: Optional[str] = None
     type: Literal["Coverage"] = "Coverage"
     domain: Domain
@@ -25,7 +25,7 @@ class Coverage(CovJsonBaseModel):
     ranges: Dict[str, Union[NdArray, TiledNdArray, AnyUrl]]
 
 
-class CoverageCollection(CovJsonBaseModel):
+class CoverageCollection(CovJsonBaseModel, extra="allow"):
     type: Literal["CoverageCollection"] = "CoverageCollection"
     domainType: Optional[DomainType] = None  # noqa: N815
     coverages: List[Coverage]

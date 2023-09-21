@@ -6,7 +6,6 @@ from typing import Optional
 
 from pydantic import model_validator
 
-from .base_models import BaseModel
 from .base_models import CovJsonBaseModel
 
 
@@ -15,7 +14,7 @@ class DataType(str, Enum):
     float = "float"
 
 
-class NdArray(CovJsonBaseModel):
+class NdArray(CovJsonBaseModel, extra="allow"):
     type: Literal["NdArray"] = "NdArray"
     dataType: DataType = DataType.float  # noqa: N815
     axisNames: Optional[List[str]] = None  # noqa: N815
@@ -44,13 +43,13 @@ class NdArray(CovJsonBaseModel):
         return self
 
 
-class TileSet(BaseModel):
+class TileSet(CovJsonBaseModel):
     tileShape: List[Optional[int]]  # noqa: N815
     urlTemplate: str  # noqa: N815
 
 
 # TODO: Validation of field dependencies
-class TiledNdArray(CovJsonBaseModel):
+class TiledNdArray(CovJsonBaseModel, extra="allow"):
     type: Literal["TiledNdArray"] = "TiledNdArray"
     dataType: DataType = DataType.float  # noqa: N815
     axisNames: List[str]  # noqa: N815

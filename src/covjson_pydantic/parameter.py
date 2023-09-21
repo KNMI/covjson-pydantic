@@ -6,13 +6,13 @@ from typing import Union
 
 from pydantic import model_validator
 
-from .base_models import BaseModel
+from .base_models import CovJsonBaseModel
 from .i18n import i18n
 from .observed_property import ObservedProperty
 from .unit import Unit
 
 
-class Parameter(BaseModel, extra="allow"):
+class Parameter(CovJsonBaseModel, extra="allow"):
     type: Literal["Parameter"] = "Parameter"
     id: Optional[str] = None
     label: Optional[i18n] = None
@@ -32,7 +32,7 @@ class Parameter(BaseModel, extra="allow"):
         return self
 
 
-class ParameterGroup(BaseModel, extra="allow"):
+class ParameterGroup(CovJsonBaseModel, extra="allow"):
     type: Literal["ParameterGroup"] = "ParameterGroup"
     id: Optional[str] = None
     label: Optional[i18n] = None
