@@ -30,7 +30,9 @@ class CompactAxis(CovJsonBaseModel):
 ValuesT = TypeVar("ValuesT")
 
 
-class ValuesAxis(CovJsonBaseModel, Generic[ValuesT], extra="allow"):
+# Combination between Generics (ValuesT) and datetime and strict mode causes issues between JSON <-> Pydantic
+# conversions. Strict mode has been disabled. Issue: https://github.com/KNMI/covjson-pydantic/issues/4
+class ValuesAxis(CovJsonBaseModel, Generic[ValuesT], extra="allow", strict=False):
     dataType: Optional[str] = None  # noqa: N815
     coordinates: Optional[List[str]] = None
     values: List[ValuesT]

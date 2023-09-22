@@ -9,4 +9,5 @@ class CovJsonBaseModel(PydanticBaseModel):
         extra="forbid",
         validate_default=True,
         validate_assignment=True,
+        strict=True,
     )
