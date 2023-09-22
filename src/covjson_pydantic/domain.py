@@ -66,7 +66,7 @@ class Axes(CovJsonBaseModel):
         return self
 
 
-class Domain(CovJsonBaseModel):
+class Domain(CovJsonBaseModel, extra="allow"):
     type: Literal["Domain"] = "Domain"
     domainType: Optional[DomainType] = None  # noqa: N815
     axes: Axes
