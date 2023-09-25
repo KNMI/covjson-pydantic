@@ -38,12 +38,12 @@ pip install git+https://github.com/KNMI/covjson-pydantic.git
 from datetime import datetime, timezone
 from pydantic import AwareDatetime
 from covjson_pydantic.coverage import Coverage
-from covjson_pydantic.domain import Domain, Axes, ValuesAxis
+from covjson_pydantic.domain import Domain, Axes, ValuesAxis, DomainType
 from covjson_pydantic.ndarray import NdArray
 
 c = Coverage(
     domain=Domain(
-        domainType="PointSeries",
+        domainType=DomainType.point_series,
         axes=Axes(
             x=ValuesAxis[float](values=[1.23]),
             y=ValuesAxis[float](values=[4.56]),

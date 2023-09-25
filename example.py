@@ -4,13 +4,14 @@ from datetime import timezone
 from covjson_pydantic.coverage import Coverage
 from covjson_pydantic.domain import Axes
 from covjson_pydantic.domain import Domain
+from covjson_pydantic.domain import DomainType
 from covjson_pydantic.domain import ValuesAxis
 from covjson_pydantic.ndarray import NdArray
 from pydantic import AwareDatetime
 
 c = Coverage(
     domain=Domain(
-        domainType="PointSeries",
+        domainType=DomainType.point_series,
         axes=Axes(
             x=ValuesAxis[float](values=[1.23]),
             y=ValuesAxis[float](values=[4.56]),
