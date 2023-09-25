@@ -8,6 +8,7 @@ from typing import TypeVar
 from typing import Union
 
 from pydantic import AwareDatetime
+from pydantic import field_validator
 from pydantic import model_validator
 from pydantic import PositiveInt
 
@@ -73,6 +74,16 @@ class Domain(CovJsonBaseModel, extra="allow"):
     domainType: Optional[DomainType] = None  # noqa: N815
     axes: Axes
     referencing: Optional[List[ReferenceSystemConnectionObject]] = None
+
+    # TODO: This is a workaround to allow domainType to work in strict mode, in combination with FastAPI.
+    # See: https://github.com/tiangolo/fastapi/discussions/9868
+    # And: https://github.com/KNMI/covjson-pydantic/issues/5
+    @field_validator("domainType", mode="before")
+    @classmethod
+    def value_to_enum(cls, v):
+        if isinstance(v, str):
+            return DomainType(v)
+        return v
 
     @staticmethod
     def check_axis(domain_type, axes, required_axes, allowed_axes, single_value_axes):
