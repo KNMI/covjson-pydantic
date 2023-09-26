@@ -5,55 +5,50 @@ from typing import Optional
 from typing import Union
 
 from pydantic import AnyUrl
-from pydantic import Extra
-from pydantic.class_validators import root_validator
+from pydantic import model_validator
 
-from .base_models import BaseModel
+from .base_models import CovJsonBaseModel
 from .i18n import i18n
 
 
-class TargetConcept(BaseModel):
-    id: Optional[str]  # Not in spec, but needed for example in spec for 'Identifier-based Reference Systems'
+class TargetConcept(CovJsonBaseModel):
+    id: Optional[str] = None  # Not in spec, but needed for example in spec for 'Identifier-based Reference Systems'
     label: i18n
-    description: Optional[i18n]
+    description: Optional[i18n] = None
 
 
-class ReferenceSystem(BaseModel, extra=Extra.allow):
+class ReferenceSystem(CovJsonBaseModel, extra="allow"):
     type: Literal["GeographicCRS", "ProjectedCRS", "VerticalCRS", "TemporalRS", "IdentifierRS"]
-    id: Optional[str]
-    description: Optional[i18n]
+    id: Optional[str] = None
+    description: Optional[i18n] = None
 
     # Only for TemporalRS
-    calendar: Optional[Union[Literal["Gregorian"], AnyUrl]]
-    timeScale: Optional[AnyUrl]  # noqa: N815
+    calendar: Optional[Union[Literal["Gregorian"], AnyUrl]] = None
+    timeScale: Optional[AnyUrl] = None  # noqa: N815
 
     # Only for IdentifierRS
-    label: Optional[i18n]
-    targetConcept: Optional[TargetConcept]  # noqa: N815
-    identifiers: Optional[Dict[str, TargetConcept]]
+    label: Optional[i18n] = None
+    targetConcept: Optional[TargetConcept] = None  # noqa: N815
+    identifiers: Optional[Dict[str, TargetConcept]] = None
 
-    @root_validator(skip_on_failure=True)
-    def check_type_specific_fields(cls, values):
-        if values["type"] != "TemporalRS" and (
-            values.get("calendar") is not None or values.get("timeScale") is not None
-        ):
+    @model_validator(mode="after")
+    def check_type_specific_fields(self):
+        if self.type != "TemporalRS" and (self.calendar is not None or self.timeScale is not None):
             raise ValueError("'calendar' and 'timeScale' fields can only be used for type 'TemporalRS'")
 
-        if values["type"] != "IdentifierRS" and (
-            values.get("label") is not None
-            or values.get("targetConcept") is not None
-            or values.get("identifiers") is not None
+        if self.type != "IdentifierRS" and (
+            self.label is not None or self.targetConcept is not None or self.identifiers is not None
         ):
             raise ValueError(
                 "'label', 'targetConcept' and 'identifiers' fields can only be used for type 'IdentifierRS'"
             )
 
-        if values["type"] == "IdentifierRS" and values.get("targetConcept") is None:
+        if self.type == "IdentifierRS" and self.targetConcept is None:
             raise ValueError("An identifier RS object MUST have a member 'targetConcept'")
 
-        return values
+        return self
 
 
-class ReferenceSystemConnectionObject(BaseModel):
+class ReferenceSystemConnectionObject(CovJsonBaseModel):
     coordinates: List[str]
     system: ReferenceSystem

@@ -1,25 +1,25 @@
 from typing import Optional
 from typing import Union
 
-from pydantic.class_validators import root_validator
+from pydantic import model_validator
 
-from .base_models import BaseModel
+from .base_models import CovJsonBaseModel
 from .i18n import i18n
 
 
-class Symbol(BaseModel):
+class Symbol(CovJsonBaseModel):
     value: str
     type: str
 
 
-class Unit(BaseModel):
-    id: Optional[str]
-    label: Optional[i18n]
-    symbol: Optional[Union[str, Symbol]]
+class Unit(CovJsonBaseModel):
+    id: Optional[str] = None
+    label: Optional[i18n] = None
+    symbol: Optional[Union[str, Symbol]] = None
 
-    @root_validator(skip_on_failure=True)
-    def check_either_label_or_symbol(cls, values):
-        if values.get("label") is None and values.get("symbol") is None:
+    @model_validator(mode="after")
+    def check_either_label_or_symbol(self):
+        if self.label is None and self.symbol is None:
             raise ValueError("Either 'label' or 'symbol' should be set")
 
-        return values
+        return self

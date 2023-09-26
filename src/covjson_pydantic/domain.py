@@ -1,4 +1,3 @@
-from datetime import datetime
 from enum import Enum
 from typing import Generic
 from typing import List
@@ -8,49 +7,43 @@ from typing import Tuple
 from typing import TypeVar
 from typing import Union
 
-from pydantic import Extra
+from pydantic import AwareDatetime
+from pydantic import field_validator
+from pydantic import model_validator
 from pydantic import PositiveInt
-from pydantic.class_validators import root_validator
-from pydantic.generics import GenericModel
 
-from .base_models import BaseModel
 from .base_models import CovJsonBaseModel
 from .reference_system import ReferenceSystemConnectionObject
 
 
-class CompactAxis(BaseModel):
+class CompactAxis(CovJsonBaseModel):
     start: float
     stop: float
     num: PositiveInt
 
-    @root_validator(skip_on_failure=True)
-    def single_value_case(cls, values):
-        if values["num"] == 1 and values["start"] != values["stop"]:
+    @model_validator(mode="after")
+    def single_value_case(self):
+        if self.num == 1 and self.start != self.stop:
             raise ValueError("If the value of 'num' is 1, then 'start' and 'stop' MUST have identical values.")
-        return values
+        return self
 
 
 ValuesT = TypeVar("ValuesT")
 
 
-class ValuesAxis(GenericModel, Generic[ValuesT]):
-    dataType: Optional[str]  # noqa: N815
-    coordinates: Optional[List[str]]
+# Combination between Generics (ValuesT) and datetime and strict mode causes issues between JSON <-> Pydantic
+# conversions. Strict mode has been disabled. Issue: https://github.com/KNMI/covjson-pydantic/issues/4
+class ValuesAxis(CovJsonBaseModel, Generic[ValuesT], extra="allow", strict=False):
+    dataType: Optional[str] = None  # noqa: N815
+    coordinates: Optional[List[str]] = None
     values: List[ValuesT]
-    bounds: Optional[List[ValuesT]]
+    bounds: Optional[List[ValuesT]] = None
 
-    class Config:
-        anystr_strip_whitespace = True
-        min_anystr_length = 1
-        extra = Extra.allow  # allow custom members
-        validate_all = True
-        validate_assignment = True
-
-    @root_validator(skip_on_failure=True)
-    def bounds_length(cls, values):
-        if values["bounds"] is not None and len(values["bounds"]) != 2 * len(values["values"]):
+    @model_validator(mode="after")
+    def bounds_length(self):
+        if self.bounds is not None and len(self.bounds) != 2 * len(self.values):
             raise ValueError("If provided, the length of 'bounds' should be twice that of 'values'.")
-        return values
+        return self
 
 
 class DomainType(str, Enum):
@@ -62,31 +55,35 @@ class DomainType(str, Enum):
     multi_point = "MultiPoint"
 
 
-class Axes(BaseModel):
-    x: Optional[Union[ValuesAxis[float], CompactAxis]]
-    y: Optional[Union[ValuesAxis[float], CompactAxis]]
-    z: Optional[Union[ValuesAxis[float], CompactAxis]]
-    t: Optional[ValuesAxis[datetime]]
-    composite: Optional[ValuesAxis[Tuple]]
+class Axes(CovJsonBaseModel):
+    x: Optional[Union[ValuesAxis[float], CompactAxis]] = None
+    y: Optional[Union[ValuesAxis[float], CompactAxis]] = None
+    z: Optional[Union[ValuesAxis[float], CompactAxis]] = None
+    t: Optional[ValuesAxis[AwareDatetime]] = None
+    composite: Optional[ValuesAxis[Tuple]] = None
 
-    @root_validator(skip_on_failure=True)
-    def at_least_one_axes(cls, values):
-        if (
-            values["x"] is None
-            and values["y"] is None
-            and values["z"] is None
-            and values["t"] is None
-            and values["composite"] is None
-        ):
+    @model_validator(mode="after")
+    def at_least_one_axes(self):
+        if self.x is None and self.y is None and self.z is None and self.t is None and self.composite is None:
             raise ValueError("At least one axis of x,y,z,t or composite must be given.")
-        return values
+        return self
 
 
-class Domain(CovJsonBaseModel):
+class Domain(CovJsonBaseModel, extra="allow"):
     type: Literal["Domain"] = "Domain"
-    domainType: Optional[DomainType]  # noqa: N815
+    domainType: Optional[DomainType] = None  # noqa: N815
     axes: Axes
-    referencing: Optional[List[ReferenceSystemConnectionObject]]
+    referencing: Optional[List[ReferenceSystemConnectionObject]] = None
+
+    # TODO: This is a workaround to allow domainType to work in strict mode, in combination with FastAPI.
+    # See: https://github.com/tiangolo/fastapi/discussions/9868
+    # And: https://github.com/KNMI/covjson-pydantic/issues/5
+    @field_validator("domainType", mode="before")
+    @classmethod
+    def value_to_enum(cls, v):
+        if isinstance(v, str):
+            return DomainType(v)
+        return v
 
     @staticmethod
     def check_axis(domain_type, axes, required_axes, allowed_axes, single_value_axes):
@@ -119,10 +116,10 @@ class Domain(CovJsonBaseModel):
                         f"of a '{domain_type.value}' domain must contain a single value."
                     )
 
-    @root_validator(skip_on_failure=True)
-    def check_domain_consistent(cls, values):
-        domain_type = values.get("domainType")
-        axes = values.get("axes")
+    @model_validator(mode="after")
+    def check_domain_consistent(self):
+        domain_type = self.domainType
+        axes = self.axes
 
         if domain_type == DomainType.grid:
             Domain.check_axis(
@@ -158,4 +155,4 @@ class Domain(CovJsonBaseModel):
                 domain_type, axes, required_axes={"composite"}, allowed_axes={"t"}, single_value_axes={"t"}
             )
 
-        return values
+        return self

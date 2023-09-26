@@ -47,7 +47,7 @@ def test_happy_cases(file_name, object_type):
     json_string = json.dumps(data, separators=(",", ":"))
 
     # Round-trip
-    assert object_type.parse_raw(json_string).json(exclude_none=True) == json_string
+    assert object_type.model_validate_json(json_string).model_dump_json(exclude_none=True) == json_string
 
 
 error_cases = [
@@ -70,4 +70,4 @@ def test_error_cases(file_name, object_type, error_message):
     json_string = json.dumps(data, separators=(",", ":"))
 
     with pytest.raises(ValidationError, match=error_message):
-        object_type.parse_raw(json_string)
+        object_type.model_validate_json(json_string)

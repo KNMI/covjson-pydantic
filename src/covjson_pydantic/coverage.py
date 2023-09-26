@@ -16,19 +16,19 @@ from .parameter import ParameterGroup
 from .reference_system import ReferenceSystemConnectionObject
 
 
-class Coverage(CovJsonBaseModel):
-    id: Optional[str]
+class Coverage(CovJsonBaseModel, extra="allow"):
+    id: Optional[str] = None
     type: Literal["Coverage"] = "Coverage"
     domain: Domain
-    parameters: Optional[Dict[str, Parameter]]
-    parameterGroups: Optional[List[ParameterGroup]]  # noqa: N815
+    parameters: Optional[Dict[str, Parameter]] = None
+    parameterGroups: Optional[List[ParameterGroup]] = None  # noqa: N815
     ranges: Dict[str, Union[NdArray, TiledNdArray, AnyUrl]]
 
 
-class CoverageCollection(CovJsonBaseModel):
+class CoverageCollection(CovJsonBaseModel, extra="allow"):
     type: Literal["CoverageCollection"] = "CoverageCollection"
-    domainType: Optional[DomainType]  # noqa: N815
+    domainType: Optional[DomainType] = None  # noqa: N815
     coverages: List[Coverage]
-    parameters: Optional[Dict[str, Parameter]]
-    parameterGroups: Optional[List[ParameterGroup]]  # noqa: N815
-    referencing: Optional[List[ReferenceSystemConnectionObject]]
+    parameters: Optional[Dict[str, Parameter]] = None
+    parameterGroups: Optional[List[ParameterGroup]] = None  # noqa: N815
+    referencing: Optional[List[ReferenceSystemConnectionObject]] = None

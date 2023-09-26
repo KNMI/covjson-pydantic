@@ -35,25 +35,27 @@ pip install git+https://github.com/KNMI/covjson-pydantic.git
 ## Usage
 
 ```python
-import datetime
+from datetime import datetime, timezone
+from pydantic import AwareDatetime
 from covjson_pydantic.coverage import Coverage
-from covjson_pydantic.domain import Domain
+from covjson_pydantic.domain import Domain, Axes, ValuesAxis, DomainType
 from covjson_pydantic.ndarray import NdArray
 
 c = Coverage(
     domain=Domain(
-        domainType="PointSeries",
-        axes={
-            "x": {"dataType": "float", "values": [1.23]},
-            "y": {"values": [4.56]},
-            "t": {"dataType": "datetime", "values": [datetime.datetime.now()]}
-        },
+        domainType=DomainType.point_series,
+        axes=Axes(
+            x=ValuesAxis[float](values=[1.23]),
+            y=ValuesAxis[float](values=[4.56]),
+            t=ValuesAxis[AwareDatetime](values=[datetime.now(tz=timezone.utc)])
+        )
     ),
     ranges={
         "temperature": NdArray(axisNames=["x", "y", "t"], shape=[1, 1, 1], values=[42.0])
     }
 )
-print(c.json(exclude_none=True,indent=True))
+
+print(c.model_dump_json(exclude_none=True, indent=4))
 ```
 Will print
 ```json
@@ -64,7 +66,6 @@ Will print
         "domainType": "PointSeries",
         "axes": {
             "x": {
-                "dataType": "float",
                 "values": [
                     1.23
                 ]
@@ -75,9 +76,8 @@ Will print
                 ]
             },
             "t": {
-                "dataType": "datetime",
                 "values": [
-                    "2023-01-19T13:14:47.126631Z"
+                    "2023-09-14T11:54:02.151493Z"
                 ]
             }
         }
