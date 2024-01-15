@@ -100,8 +100,8 @@ class Domain(CovJsonBaseModel, extra="allow"):
                     )
                 if isinstance(axis, CompactAxis) and axis.num != 1:
                     raise ValueError(
-                        f"The 'values' field of the CompactAxis '{axis_name}'-axis "
-                        f"of a '{axis.num}' domain must contain a single value."
+                        f"The 'num' field of the CompactAxis '{axis_name}'-axis "
+                        f"of a '{domain_type.value}' domain must contain a single value."
                     )
 
         # Check allowed axes
@@ -115,9 +115,14 @@ class Domain(CovJsonBaseModel, extra="allow"):
         for axis_name in allowed_axes:
             axis = getattr(axes, axis_name)
             if axis is not None and axis_name in single_value_axes:
-                if not (isinstance(axis, ValuesAxis) and len(axis.values) == 1):
+                if isinstance(axis, ValuesAxis) and len(axis.values) != 1:
                     raise ValueError(
-                        f"If provided, the 'values' field of the '{axis_name}'-axis "
+                        f"If provided, the 'values' field of the ValuesAxis '{axis_name}'-axis "
+                        f"of a '{domain_type.value}' domain must contain a single value."
+                    )
+                if isinstance(axis, CompactAxis) and axis.num != 1:
+                    raise ValueError(
+                        f"If provided, the 'values' field of the CompactAxis '{axis_name}'-axis "
                         f"of a '{domain_type.value}' domain must contain a single value."
                     )
 

@@ -56,7 +56,7 @@ error_cases = [
     (
         "point-series-domain-more-z.json",
         Domain,
-        r"If provided, the 'values' field of the 'z'-axis of a 'PointSeries' domain must contain a single value.",
+        r"If provided, the 'values' field of the ValuesAxis 'z'-axis of a 'PointSeries' domain must contain a single value.",
     ),
     ("point-series-domain-no-t.json", Domain, r"A 'PointSeries' must have a 't'-axis."),
 ]
