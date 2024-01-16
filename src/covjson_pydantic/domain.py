@@ -101,7 +101,7 @@ class Domain(CovJsonBaseModel, extra="allow"):
                 if isinstance(axis, CompactAxis) and axis.num != 1:
                     raise ValueError(
                         f"The 'num' field of the CompactAxis '{axis_name}'-axis "
-                        f"of a '{domain_type.value}' domain must contain a single value."
+                        f"of a '{domain_type.value}' domain must be 1."
                     )
 
         # Check allowed axes
