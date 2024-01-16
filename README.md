@@ -26,7 +26,7 @@ This repository contains the coveragejson-pydantic Python package. It provides [
 pip install covjson-pydantic
 ```
 
-Or install from source:
+Or you can install directly from source:
 
 ```shell
 pip install git+https://github.com/KNMI/covjson-pydantic.git
@@ -106,7 +106,7 @@ Will print
 
 ## Contributing
 
-Make an editable install from within the repository root
+Make an editable installation from within the repository root
 
 ```shell
 pip install -e '.[test]'
@@ -118,9 +118,24 @@ pip install -e '.[test]'
 pytest tests/
 ```
 
+### Linting and typing
+
+Linting and typing (mypy) is doing using [pre-commit](https://pre-commit.com) hooks.
+
+```shell
+pip install pre-commit
+pre-commit install
+pre-commit run
+```
+
+## Related packages
+
+* [edr-pydantic](https://github.com/KNMI/edr-pydantic) - Pydantic data models for the Environmental Data Retrieval (EDR) API
+* [geojson-pydantic](https://github.com/developmentseed/geojson-pydantic) - Pydantic data models for the GeoJSON spec
+
 ## Real world usage
 
-This library is used to build an Environmental Data Retrieval (EDR) API, serving automatic weather data station data from the KNMI. See the [KNMI Data Platform](https://developer.dataplatform.knmi.nl/edr-api).
+This library is used to build an OGC Environmental Data Retrieval (EDR) API, serving automatic weather data station data from The Royal Netherlands Meteorological Institute (KNMI). See the [KNMI Data Platform EDR API](https://developer.dataplatform.knmi.nl/edr-api).
 
 ## TODOs
 Help is wanted in the following areas to fully implement the CovJSON spec:
@@ -132,11 +147,3 @@ Help is wanted in the following areas to fully implement the CovJSON spec:
 ## License
 
 Apache License, Version 2.0
-
-## Authors
-
-Members of the KNMI Data Platform team. Reachable at opendata@knmi.nl.
-
-## Copyright
-
-Koninklijk Nederlands Meteorologisch Instituut (KNMI)
