@@ -122,8 +122,8 @@ class Domain(CovJsonBaseModel, extra="allow"):
                     )
                 if isinstance(axis, CompactAxis) and axis.num != 1:
                     raise ValueError(
-                        f"If provided, the 'values' field of the CompactAxis '{axis_name}'-axis "
-                        f"of a '{domain_type.value}' domain must contain a single value."
+                        f"If provided, the 'num' field of the CompactAxis '{axis_name}'-axis "
+                        f"of a '{domain_type.value}' domain must be 1."
                     )
 
     @model_validator(mode="after")
