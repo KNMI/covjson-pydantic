@@ -120,7 +120,7 @@ pytest tests/
 
 ### Linting and typing
 
-Linting and typing (mypy) is doing using [pre-commit](https://pre-commit.com) hooks.
+Linting and typing (mypy) is done using [pre-commit](https://pre-commit.com) hooks.
 
 ```shell
 pip install pre-commit
