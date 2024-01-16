@@ -26,6 +26,7 @@ happy_cases = [
     ("spec-domain-vertical-profile.json", Domain),
     ("spec-domain-point-series.json", Domain),
     ("spec-domain-point.json", Domain),
+    ("spec-domain-point-compact.json", Domain),
     ("spec-domain-multipoint-series.json", Domain),
     ("spec-domain-multipoint.json", Domain),
     ("ndarray-float.json", NdArray),
@@ -55,7 +56,8 @@ error_cases = [
     (
         "point-series-domain-more-z.json",
         Domain,
-        r"If provided, the 'values' field of the 'z'-axis of a 'PointSeries' domain must contain a single value.",
+        r"If provided, the 'values' field of the ValuesAxis 'z'-axis of a 'PointSeries' "
+        + "domain must contain a single value.",
     ),
     ("point-series-domain-no-t.json", Domain, r"A 'PointSeries' must have a 't'-axis."),
 ]

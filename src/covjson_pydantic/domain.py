@@ -93,10 +93,15 @@ class Domain(CovJsonBaseModel, extra="allow"):
             if axis is None:
                 raise ValueError(f"A '{domain_type.value}' must have a '{axis_name}'-axis.")
             if axis_name in single_value_axes:
-                if not (isinstance(axis, ValuesAxis) and len(axis.values) == 1):
+                if isinstance(axis, ValuesAxis) and len(axis.values) != 1:
                     raise ValueError(
-                        f"The 'values' field of the '{axis_name}'-axis "
+                        f"The 'values' field of the ValuesAxis '{axis_name}'-axis "
                         f"of a '{domain_type.value}' domain must contain a single value."
+                    )
+                if isinstance(axis, CompactAxis) and axis.num != 1:
+                    raise ValueError(
+                        f"The 'num' field of the CompactAxis '{axis_name}'-axis "
+                        f"of a '{domain_type.value}' domain must be 1."
                     )
 
         # Check allowed axes
@@ -110,10 +115,15 @@ class Domain(CovJsonBaseModel, extra="allow"):
         for axis_name in allowed_axes:
             axis = getattr(axes, axis_name)
             if axis is not None and axis_name in single_value_axes:
-                if not (isinstance(axis, ValuesAxis) and len(axis.values) == 1):
+                if isinstance(axis, ValuesAxis) and len(axis.values) != 1:
                     raise ValueError(
-                        f"If provided, the 'values' field of the '{axis_name}'-axis "
+                        f"If provided, the 'values' field of the ValuesAxis '{axis_name}'-axis "
                         f"of a '{domain_type.value}' domain must contain a single value."
+                    )
+                if isinstance(axis, CompactAxis) and axis.num != 1:
+                    raise ValueError(
+                        f"If provided, the 'num' field of the CompactAxis '{axis_name}'-axis "
+                        f"of a '{domain_type.value}' domain must be 1."
                     )
 
     @model_validator(mode="after")
