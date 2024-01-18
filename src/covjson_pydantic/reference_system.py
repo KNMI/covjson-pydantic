@@ -1,35 +1,35 @@
 from typing import Dict
 from typing import List
 from typing import Literal
-from typing import Optional
 from typing import Union
 
 from pydantic import AnyUrl
 from pydantic import model_validator
 
 from .base_models import CovJsonBaseModel
+from .base_models import OptionalS
 from .i18n import i18n
 
 
 class TargetConcept(CovJsonBaseModel):
-    id: Optional[str] = None  # Not in spec, but needed for example in spec for 'Identifier-based Reference Systems'
+    id: OptionalS[str] = None  # Not in spec, but needed for example in spec for 'Identifier-based Reference Systems'
     label: i18n
-    description: Optional[i18n] = None
+    description: OptionalS[i18n] = None
 
 
 class ReferenceSystem(CovJsonBaseModel, extra="allow"):
     type: Literal["GeographicCRS", "ProjectedCRS", "VerticalCRS", "TemporalRS", "IdentifierRS"]
-    id: Optional[str] = None
-    description: Optional[i18n] = None
+    id: OptionalS[str] = None
+    description: OptionalS[i18n] = None
 
     # Only for TemporalRS
-    calendar: Optional[Union[Literal["Gregorian"], AnyUrl]] = None
-    timeScale: Optional[AnyUrl] = None  # noqa: N815
+    calendar: OptionalS[Union[Literal["Gregorian"], AnyUrl]] = None
+    timeScale: OptionalS[AnyUrl] = None  # noqa: N815
 
     # Only for IdentifierRS
-    label: Optional[i18n] = None
-    targetConcept: Optional[TargetConcept] = None  # noqa: N815
-    identifiers: Optional[Dict[str, TargetConcept]] = None
+    label: OptionalS[i18n] = None
+    targetConcept: OptionalS[TargetConcept] = None  # noqa: N815
+    identifiers: OptionalS[Dict[str, TargetConcept]] = None
 
     @model_validator(mode="after")
     def check_type_specific_fields(self):

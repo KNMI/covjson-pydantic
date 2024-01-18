@@ -1,12 +1,12 @@
 from typing import Dict
 from typing import List
 from typing import Literal
-from typing import Optional
 from typing import Union
 
 from pydantic import model_validator
 
 from .base_models import CovJsonBaseModel
+from .base_models import OptionalS
 from .i18n import i18n
 from .observed_property import ObservedProperty
 from .unit import Unit
@@ -14,12 +14,12 @@ from .unit import Unit
 
 class Parameter(CovJsonBaseModel, extra="allow"):
     type: Literal["Parameter"] = "Parameter"
-    id: Optional[str] = None
-    label: Optional[i18n] = None
-    description: Optional[i18n] = None
+    id: OptionalS[str] = None
+    label: OptionalS[i18n] = None
+    description: OptionalS[i18n] = None
     observedProperty: ObservedProperty  # noqa: N815
-    categoryEncoding: Optional[Dict[str, Union[int, List[int]]]] = None  # noqa: N815
-    unit: Optional[Unit] = None
+    categoryEncoding: OptionalS[Dict[str, Union[int, List[int]]]] = None  # noqa: N815
+    unit: OptionalS[Unit] = None
 
     @model_validator(mode="after")
     def must_not_have_unit_if_observed_property_has_categories(self):
@@ -34,10 +34,10 @@ class Parameter(CovJsonBaseModel, extra="allow"):
 
 class ParameterGroup(CovJsonBaseModel, extra="allow"):
     type: Literal["ParameterGroup"] = "ParameterGroup"
-    id: Optional[str] = None
-    label: Optional[i18n] = None
-    description: Optional[i18n] = None
-    observedProperty: Optional[ObservedProperty] = None  # noqa: N815
+    id: OptionalS[str] = None
+    label: OptionalS[i18n] = None
+    description: OptionalS[i18n] = None
+    observedProperty: OptionalS[ObservedProperty] = None  # noqa: N815
     members: List[str]
 
     @model_validator(mode="after")

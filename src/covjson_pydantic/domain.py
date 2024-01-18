@@ -2,7 +2,6 @@ from enum import Enum
 from typing import Generic
 from typing import List
 from typing import Literal
-from typing import Optional
 from typing import Tuple
 from typing import TypeVar
 from typing import Union
@@ -13,6 +12,7 @@ from pydantic import model_validator
 from pydantic import PositiveInt
 
 from .base_models import CovJsonBaseModel
+from .base_models import OptionalS
 from .reference_system import ReferenceSystemConnectionObject
 
 
@@ -34,10 +34,10 @@ ValuesT = TypeVar("ValuesT")
 # Combination between Generics (ValuesT) and datetime and strict mode causes issues between JSON <-> Pydantic
 # conversions. Strict mode has been disabled. Issue: https://github.com/KNMI/covjson-pydantic/issues/4
 class ValuesAxis(CovJsonBaseModel, Generic[ValuesT], extra="allow", strict=False):
-    dataType: Optional[str] = None  # noqa: N815
-    coordinates: Optional[List[str]] = None
+    dataType: OptionalS[str] = None  # noqa: N815
+    coordinates: OptionalS[List[str]] = None
     values: List[ValuesT]
-    bounds: Optional[List[ValuesT]] = None
+    bounds: OptionalS[List[ValuesT]] = None
 
     @model_validator(mode="after")
     def bounds_length(self):
@@ -56,11 +56,11 @@ class DomainType(str, Enum):
 
 
 class Axes(CovJsonBaseModel):
-    x: Optional[Union[ValuesAxis[float], CompactAxis]] = None
-    y: Optional[Union[ValuesAxis[float], CompactAxis]] = None
-    z: Optional[Union[ValuesAxis[float], CompactAxis]] = None
-    t: Optional[ValuesAxis[AwareDatetime]] = None
-    composite: Optional[ValuesAxis[Tuple]] = None
+    x: OptionalS[Union[ValuesAxis[float], CompactAxis]] = None
+    y: OptionalS[Union[ValuesAxis[float], CompactAxis]] = None
+    z: OptionalS[Union[ValuesAxis[float], CompactAxis]] = None
+    t: OptionalS[ValuesAxis[AwareDatetime]] = None
+    composite: OptionalS[ValuesAxis[Tuple]] = None
 
     @model_validator(mode="after")
     def at_least_one_axes(self):
@@ -71,9 +71,9 @@ class Axes(CovJsonBaseModel):
 
 class Domain(CovJsonBaseModel, extra="allow"):
     type: Literal["Domain"] = "Domain"
-    domainType: Optional[DomainType] = None  # noqa: N815
+    domainType: OptionalS[DomainType] = None  # noqa: N815
     axes: Axes
-    referencing: Optional[List[ReferenceSystemConnectionObject]] = None
+    referencing: OptionalS[List[ReferenceSystemConnectionObject]] = None
 
     # TODO: This is a workaround to allow domainType to work in strict mode, in combination with FastAPI.
     # See: https://github.com/tiangolo/fastapi/discussions/9868

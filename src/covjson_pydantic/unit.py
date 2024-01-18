@@ -1,9 +1,9 @@
-from typing import Optional
 from typing import Union
 
 from pydantic import model_validator
 
 from .base_models import CovJsonBaseModel
+from .base_models import OptionalS
 from .i18n import i18n
 
 
@@ -13,9 +13,9 @@ class Symbol(CovJsonBaseModel):
 
 
 class Unit(CovJsonBaseModel):
-    id: Optional[str] = None
-    label: Optional[i18n] = None
-    symbol: Optional[Union[str, Symbol]] = None
+    id: OptionalS[str] = None
+    label: OptionalS[i18n] = None
+    symbol: OptionalS[Union[str, Symbol]] = None
 
     @model_validator(mode="after")
     def check_either_label_or_symbol(self):
