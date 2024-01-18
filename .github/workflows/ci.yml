@@ -75,6 +75,6 @@ jobs:
       - name: Build and publish
         if: steps.tag.outputs.tag == steps.module.outputs.version
         env:
-          FLIT_USERNAME: ${{ secrets.PYPI_USERNAME }}
-          FLIT_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+          FLIT_USERNAME: __token__
+          FLIT_PASSWORD: ${{ secrets.PYPI_TOKEN }}
         run: flit publish
