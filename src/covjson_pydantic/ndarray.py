@@ -7,6 +7,7 @@ from typing import Optional
 from pydantic import model_validator
 
 from .base_models import CovJsonBaseModel
+from .base_models import OptionalS
 
 
 # TODO: Support for integers and strings
@@ -17,8 +18,8 @@ class DataType(str, Enum):
 class NdArray(CovJsonBaseModel, extra="allow"):
     type: Literal["NdArray"] = "NdArray"
     dataType: DataType = DataType.float  # noqa: N815
-    axisNames: Optional[List[str]] = None  # noqa: N815
-    shape: Optional[List[int]] = None
+    axisNames: OptionalS[List[str]] = None  # noqa: N815
+    shape: OptionalS[List[int]] = None
     values: List[Optional[float]]
 
     @model_validator(mode="after")
