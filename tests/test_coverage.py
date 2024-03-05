@@ -16,6 +16,8 @@ from pydantic import ValidationError
 
 happy_cases = [
     ("spec-axes.json", Axes),
+    ("int-axes.json", Axes),
+    ("str-axes.json", Axes),
     ("coverage-json.json", Coverage),
     ("doc-example-coverage.json", Coverage),
     ("spec-vertical-profile-coverage.json", Coverage),
@@ -60,6 +62,7 @@ error_cases = [
         + "domain must contain a single value.",
     ),
     ("point-series-domain-no-t.json", Domain, r"A 'PointSeries' must have a 't'-axis."),
+    ("mixed-type-axes.json", Axes, r"Input should be a valid number"),
 ]
 
 
