@@ -62,6 +62,7 @@ error_cases = [
         + "domain must contain a single value.",
     ),
     ("point-series-domain-no-t.json", Domain, r"A 'PointSeries' must have a 't'-axis."),
+    ("mixed-type-axes.json", Axes, r"Input should be a valid number"),
 ]
 
 
