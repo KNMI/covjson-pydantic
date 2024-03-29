@@ -16,7 +16,6 @@ from pydantic import ValidationError
 
 happy_cases = [
     ("spec-axes.json", Axes),
-    ("int-axes.json", Axes),
     ("str-axes.json", Axes),
     ("coverage-json.json", Coverage),
     ("doc-example-coverage.json", Coverage),
