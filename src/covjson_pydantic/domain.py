@@ -56,9 +56,9 @@ class DomainType(str, Enum):
 
 
 class Axes(CovJsonBaseModel):
-    x: Optional[Union[ValuesAxis[float], CompactAxis]] = None
-    y: Optional[Union[ValuesAxis[float], CompactAxis]] = None
-    z: Optional[Union[ValuesAxis[float], CompactAxis]] = None
+    x: Optional[Union[ValuesAxis[float], ValuesAxis[str], CompactAxis]] = None
+    y: Optional[Union[ValuesAxis[float], ValuesAxis[str], CompactAxis]] = None
+    z: Optional[Union[ValuesAxis[float], ValuesAxis[str], CompactAxis]] = None
     t: Optional[ValuesAxis[AwareDatetime]] = None
     composite: Optional[ValuesAxis[Tuple]] = None
 

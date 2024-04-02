@@ -19,7 +19,7 @@ classifiers = [
     "Topic :: Scientific/Engineering :: GIS",
     "Typing :: Typed",
 ]
-version = "0.2.1"
+version = "0.3.0"
 dependencies = ["pydantic>=2.3,<3"]
 
 [project.optional-dependencies]
