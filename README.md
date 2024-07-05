@@ -34,6 +34,8 @@ pip install git+https://github.com/KNMI/covjson-pydantic.git
 
 ## Usage
 
+### Generating CovJSON
+
 ```python
 from datetime import datetime, timezone
 from pydantic import AwareDatetime
@@ -102,6 +104,36 @@ Will print
         }
     }
 }
+```
+
+### Validating CovJSON
+
+There is a helper `TypeAdapter` called `CoverageJSON` that will validate any (supported) CoverageJSON input, and
+return the corresponding model. These can be of the type `CoverageCollection`, `Coverage`, `Domain`, `TiledNdArray`
+or `NdArray`.
+
+```python
+from covjson_pydantic.coverage import CoverageJSON
+covjson = CoverageJSON.validate_json("""
+{
+    "type": "NdArray",
+    "dataType": "float",
+    "axisNames": [
+        "t",
+        "y",
+        "x"
+    ],
+    "shape": [
+        1,
+        1,
+        1
+    ],
+    "values": [
+        27.1
+    ]
+}
+""")
+print(type(covjson))
 ```
 
 ## Contributing
