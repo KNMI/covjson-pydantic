@@ -37,6 +37,7 @@ class CoverageCollection(CovJsonBaseModel, extra="allow"):
     referencing: Optional[List[ReferenceSystemConnectionObject]] = None
 
 
+# type: Union[CoverageCollection, Coverage, Domain, TiledNdArray, NdArray]
 CoverageJSON = TypeAdapter(
     Annotated[
         Union[CoverageCollection, Coverage, Domain, TiledNdArray, NdArray],
