@@ -9,9 +9,10 @@ from pydantic import model_validator
 from .base_models import CovJsonBaseModel
 
 
-# TODO: Support for integers and strings
 class DataType(str, Enum):
     float = "float"
+    integer = "integer"
+    string = "string"
 
 
 class NdArray(CovJsonBaseModel, extra="allow"):
@@ -19,7 +20,7 @@ class NdArray(CovJsonBaseModel, extra="allow"):
     dataType: DataType = DataType.float  # noqa: N815
     axisNames: Optional[List[str]] = None  # noqa: N815
     shape: Optional[List[int]] = None
-    values: List[Optional[float]]
+    values: List[Optional[float | int | str]]
 
     @model_validator(mode="after")
     def check_field_dependencies(self):
