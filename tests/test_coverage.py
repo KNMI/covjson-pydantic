@@ -6,12 +6,21 @@ from covjson_pydantic.coverage import Coverage
 from covjson_pydantic.coverage import CoverageCollection
 from covjson_pydantic.domain import Axes
 from covjson_pydantic.domain import Domain
+from covjson_pydantic.ndarray import DataType
 from covjson_pydantic.ndarray import NdArray
 from covjson_pydantic.ndarray import TiledNdArray
 from covjson_pydantic.parameter import Parameter
 from covjson_pydantic.parameter import ParameterGroup
 from covjson_pydantic.reference_system import ReferenceSystem
 from pydantic import ValidationError
+
+
+class NdArrayInteger(NdArray):
+    dataType: DataType = DataType.integer  # noqa: N815
+
+
+class NdArrayString(NdArray):
+    dataType: DataType = DataType.string  # noqa: N815
 
 
 happy_cases = [
@@ -33,6 +42,8 @@ happy_cases = [
     ("spec-domain-multipoint.json", Domain),
     ("spec-domain-trajectory.json", Domain),
     ("ndarray-float.json", NdArray),
+    ("ndarray-integer.json", NdArrayInteger),
+    ("ndarray-string.json", NdArrayString),
     ("spec-ndarray.json", NdArray),
     ("spec-tiled-ndarray.json", TiledNdArray),
     ("continuous-data-parameter.json", Parameter),
