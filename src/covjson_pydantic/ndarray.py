@@ -18,6 +18,7 @@ class DataType(str, Enum):
 
 class NdArray(CovJsonBaseModel, extra="allow"):
     type: Literal["NdArray"] = "NdArray"
+    # TODO: automatically set type based on `values` data.
     dataType: DataType = DataType.float  # noqa: N815
     axisNames: Optional[List[str]] = None  # noqa: N815
     shape: Optional[List[int]] = None
