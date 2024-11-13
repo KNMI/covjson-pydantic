@@ -2,6 +2,7 @@ from datetime import datetime
 from datetime import timezone
 
 from covjson_pydantic.coverage import Coverage
+from covjson_pydantic.coverage import CoverageJSON
 from covjson_pydantic.domain import Axes
 from covjson_pydantic.domain import Domain
 from covjson_pydantic.domain import DomainType
@@ -22,3 +23,26 @@ c = Coverage(
 )
 
 print(c.model_dump_json(exclude_none=True, indent=4))
+
+covjson = CoverageJSON.validate_json(
+    """
+{
+    "type": "NdArray",
+    "dataType": "float",
+    "axisNames": [
+        "t",
+        "y",
+        "x"
+    ],
+    "shape": [
+        1,
+        1,
+        1
+    ],
+    "values": [
+        27.1
+    ]
+}
+"""
+)
+print(type(covjson))

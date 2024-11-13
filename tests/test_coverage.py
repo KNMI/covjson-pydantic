@@ -4,6 +4,7 @@ from pathlib import Path
 import pytest
 from covjson_pydantic.coverage import Coverage
 from covjson_pydantic.coverage import CoverageCollection
+from covjson_pydantic.coverage import CoverageJSON
 from covjson_pydantic.domain import Axes
 from covjson_pydantic.domain import Domain
 from covjson_pydantic.ndarray import NdArray
@@ -78,3 +79,12 @@ def test_error_cases(file_name, object_type, error_message):
 
     with pytest.raises(ValidationError, match=error_message):
         object_type.model_validate_json(json_string)
+
+
+def test_covjson_type_adapter():
+    file = Path(__file__).parent.resolve() / "test_data" / "coverage-json.json"
+    # Put JSON in default unindented format
+    with open(file, "r") as f:
+        o = CoverageJSON.validate_json(f.read())
+
+    assert isinstance(o, Coverage)
