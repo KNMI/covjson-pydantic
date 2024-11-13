@@ -1,8 +1,10 @@
 import math
 from enum import Enum
+from typing import Generic
 from typing import List
 from typing import Literal
 from typing import Optional
+from typing import TypeVar
 
 from pydantic import model_validator
 
@@ -15,12 +17,15 @@ class DataType(str, Enum):
     string = "string"
 
 
-class NdArray(CovJsonBaseModel, extra="allow"):
+DataTypeT = TypeVar("DataTypeT")
+
+
+class NdArray(CovJsonBaseModel, Generic[DataTypeT], extra="allow"):
     type: Literal["NdArray"] = "NdArray"
     dataType: DataType = DataType.float  # noqa: N815
     axisNames: Optional[List[str]] = None  # noqa: N815
     shape: Optional[List[int]] = None
-    values: List[Optional[float | int | str]]
+    values: List[Optional[DataTypeT]] = [None]
 
     @model_validator(mode="after")
     def check_field_dependencies(self):
