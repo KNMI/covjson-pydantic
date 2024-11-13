@@ -76,6 +76,7 @@ error_cases = [
     ("point-series-domain-no-t.json", Domain, r"A 'PointSeries' must have a 't'-axis."),
     ("mixed-type-axes.json", Axes, r"Input should be a valid number"),
     ("mixed-type-axes-2.json", Axes, r"Input should be a valid string"),
+    ("mixed-type-ndarray.json", NdArray, r"Input should be a valid number"),
 ]
 
 
