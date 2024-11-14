@@ -51,7 +51,7 @@ c = Coverage(
         )
     ),
     ranges={
-        "temperature": NdArray(axisNames=["x", "y", "t"], shape=[1, 1, 1], values=[42.0])
+        "temperature": NdArray[float](axisNames=["x", "y", "t"], shape=[1, 1, 1], values=[42.0])
     }
 )
 
