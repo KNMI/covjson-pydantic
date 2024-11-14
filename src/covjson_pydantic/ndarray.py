@@ -23,7 +23,7 @@ NdArrayTypeT = TypeVar("NdArrayTypeT")
 
 class NdArray(CovJsonBaseModel, Generic[NdArrayTypeT], extra="allow"):
     type: Literal["NdArray"] = "NdArray"
-    dataType: DataType = None  # noqa: N815
+    dataType: DataType | None = None  # noqa: N815
     axisNames: Optional[List[str]] = None  # noqa: N815
     shape: Optional[List[int]] = None
     values: List[Optional[NdArrayTypeT]] = []
