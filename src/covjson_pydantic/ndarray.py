@@ -23,7 +23,7 @@ NdArrayTypeT = TypeVar("NdArrayTypeT")
 
 class NdArray(CovJsonBaseModel, Generic[NdArrayTypeT], extra="allow"):
     type: Literal["NdArray"] = "NdArray"
-    dataType: DataType = DataType.float  # noqa: N815
+    dataType: DataType  # noqa: N815
     axisNames: Optional[List[str]] = None  # noqa: N815
     shape: Optional[List[int]] = None
     values: List[Optional[NdArrayTypeT]] = None
@@ -31,6 +31,9 @@ class NdArray(CovJsonBaseModel, Generic[NdArrayTypeT], extra="allow"):
     @model_validator(mode="after")
     def check_data_type(self):
         t = typing.get_args(self.model_fields["values"].annotation)[0]
+        if t == typing.Optional[NdArrayTypeT]:
+            given_type = self.dataType.name if isinstance(self.dataType, DataType) else ""
+            raise ValueError(f"No NdArray type given, please specify as NdArray[{given_type}]")
         if self.dataType == DataType.float and not t == typing.Optional[float]:
             raise ValueError("dataType and NdArray type must both be float.")
         if self.dataType == DataType.str and not t == typing.Optional[str]:

@@ -50,6 +50,14 @@
                     "en": "integer"
                 }
             }
+        },
+        "null-parameter": {
+            "type": "Parameter",
+            "observedProperty": {
+                "label": {
+                    "en": "null"
+                }
+            }
         }
     },
     "ranges": {
@@ -86,7 +94,7 @@
             ],
             "values": [
                 null,
-                62,
+                62.0,
                 63.136801411019825,
                 63.56289242989419,
                 63.98448554858814,
@@ -109,6 +117,24 @@
             "values": [
                 1,
                 2
+            ]
+        },
+        "null-parameter": {
+            "type": "NdArray",
+            "dataType": "integer",
+            "axisNames": [
+                "x",
+                "y",
+                "t"
+            ],
+            "shape": [
+                1,
+                1,
+                2
+            ],
+            "values": [
+                null,
+                null
             ]
         }
     },
