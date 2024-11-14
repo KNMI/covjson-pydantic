@@ -15,6 +15,7 @@ from .base_models import CovJsonBaseModel
 class DataType(str, Enum):
     float = "float"
     str = "string"
+    int = "integer"
 
 
 NdArrayTypeT = TypeVar("NdArrayTypeT")
@@ -34,6 +35,8 @@ class NdArray(CovJsonBaseModel, Generic[NdArrayTypeT], extra="allow"):
             raise ValueError("dataType and NdArray type must both be float.")
         if self.dataType == DataType.str and not t == typing.Optional[str]:
             raise ValueError("dataType and NdArray type must both be string.")
+        if self.dataType == DataType.int and not t == typing.Optional[int]:
+            raise ValueError("dataType and NdArray type must both be integer.")
 
         return self
 

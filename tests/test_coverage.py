@@ -34,6 +34,7 @@ happy_cases = [
     ("spec-domain-trajectory.json", Domain),
     ("ndarray-float.json", NdArray[float]),
     ("ndarray-string.json", NdArray[str]),
+    ("ndarray-integer.json", NdArray[int]),
     ("spec-ndarray.json", NdArray[float]),
     ("spec-tiled-ndarray.json", TiledNdArray),
     ("continuous-data-parameter.json", Parameter),
@@ -68,6 +69,8 @@ error_cases = [
     ("mixed-type-axes-2.json", Axes, r"Input should be a valid string"),
     ("mixed-type-ndarray-1.json", NdArray[float], r"Input should be a valid number"),
     ("mixed-type-ndarray-2.json", NdArray[str], r"dataType and NdArray type must both be float"),
+    ("mixed-type-ndarray-3.json", NdArray[int], r"Input should be a valid integer"),
+    ("mixed-type-ndarray-3.json", NdArray[float], r"dataType and NdArray type must both be integer"),
 ]
 
 
