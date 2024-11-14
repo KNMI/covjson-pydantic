@@ -66,8 +66,8 @@ error_cases = [
     ("point-series-domain-no-t.json", Domain, r"A 'PointSeries' must have a 't'-axis."),
     ("mixed-type-axes.json", Axes, r"Input should be a valid number"),
     ("mixed-type-axes-2.json", Axes, r"Input should be a valid string"),
-    ("mixed-type-ndarray-1.json", NdArray, r"dataType and NdArray type must both be float"),
-    ("mixed-type-ndarray-2.json", NdArray, r"dataType and NdArray type must both be string"),
+    ("mixed-type-ndarray-1.json", NdArray[float], r"Input should be a valid number"),
+    ("mixed-type-ndarray-2.json", NdArray[str], r"dataType and NdArray type must both be float"),
 ]
 
 

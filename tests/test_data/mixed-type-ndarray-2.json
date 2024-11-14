@@ -1,6 +1,6 @@
 {
     "type": "NdArray",
-    "dataType": "string",
+    "dataType": "float",
     "axisNames": [
         "y",
         "x"
@@ -9,8 +9,7 @@
         2
     ],
     "values": [
-        123,
-        2.32,
-        "s"
+        "foo",
+        "bar"
     ]
 }
