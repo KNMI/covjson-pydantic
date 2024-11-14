@@ -26,7 +26,7 @@ class NdArray(CovJsonBaseModel, Generic[NdArrayTypeT], extra="allow"):
     dataType: DataType  # noqa: N815
     axisNames: Optional[List[str]] = None  # noqa: N815
     shape: Optional[List[int]] = None
-    values: List[Optional[NdArrayTypeT]] = None
+    values: List[Optional[NdArrayTypeT]] = []
 
     @model_validator(mode="after")
     def check_data_type(self):
