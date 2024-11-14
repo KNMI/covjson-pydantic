@@ -18,7 +18,7 @@ c = Coverage(
             t=ValuesAxis[AwareDatetime](values=[datetime.now(tz=timezone.utc)]),
         ),
     ),
-    ranges={"temperature": NdArray(axisNames=["x", "y", "t"], shape=[1, 1, 1], values=[42.0])},
+    ranges={"temperature": NdArray[float](axisNames=["x", "y", "t"], shape=[1, 1, 1], values=[42.0])},
 )
 
 print(c.model_dump_json(exclude_none=True, indent=4))
