@@ -1,25 +1,41 @@
 import math
+import typing
 from enum import Enum
 from typing import List
 from typing import Literal
 from typing import Optional
 
 from pydantic import model_validator
+from typing_extensions import Generic
+from typing_extensions import TypeVar
 
 from .base_models import CovJsonBaseModel
 
 
-# TODO: Support for integers and strings
 class DataType(str, Enum):
     float = "float"
+    str = "string"
 
 
-class NdArray(CovJsonBaseModel, extra="allow"):
+NdArrayTypeT = TypeVar("NdArrayTypeT")
+
+
+class NdArray(CovJsonBaseModel, Generic[NdArrayTypeT], extra="allow"):
     type: Literal["NdArray"] = "NdArray"
     dataType: DataType = DataType.float  # noqa: N815
     axisNames: Optional[List[str]] = None  # noqa: N815
     shape: Optional[List[int]] = None
-    values: List[Optional[float]]
+    values: List[Optional[NdArrayTypeT]] = None
+
+    @model_validator(mode="after")
+    def check_data_type(self):
+        t = typing.get_args(self.model_fields["values"].annotation)[0]
+        if self.dataType == DataType.float and not t == typing.Optional[float]:
+            raise ValueError("dataType and NdArray type must both be float.")
+        if self.dataType == DataType.str and not t == typing.Optional[str]:
+            raise ValueError("dataType and NdArray type must both be string.")
+
+        return self
 
     @model_validator(mode="after")
     def check_field_dependencies(self):

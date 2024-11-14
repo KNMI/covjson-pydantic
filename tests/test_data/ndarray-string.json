@@ -1,0 +1,22 @@
+{
+    "type": "NdArray",
+    "dataType": "string",
+    "axisNames": [
+        "t",
+        "y",
+        "x"
+    ],
+    "shape": [
+        1,
+        2,
+        3
+    ],
+    "values": [
+        "ABC",
+        "DEF",
+        null,
+        "XYZ",
+        "a123",
+        "qwerty"
+    ]
+}

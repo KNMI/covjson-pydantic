@@ -32,8 +32,9 @@ happy_cases = [
     ("spec-domain-multipoint-series.json", Domain),
     ("spec-domain-multipoint.json", Domain),
     ("spec-domain-trajectory.json", Domain),
-    ("ndarray-float.json", NdArray),
-    ("spec-ndarray.json", NdArray),
+    ("ndarray-float.json", NdArray[float]),
+    ("ndarray-string.json", NdArray[str]),
+    ("spec-ndarray.json", NdArray[float]),
     ("spec-tiled-ndarray.json", TiledNdArray),
     ("continuous-data-parameter.json", Parameter),
     ("categorical-data-parameter.json", Parameter),
@@ -65,6 +66,8 @@ error_cases = [
     ("point-series-domain-no-t.json", Domain, r"A 'PointSeries' must have a 't'-axis."),
     ("mixed-type-axes.json", Axes, r"Input should be a valid number"),
     ("mixed-type-axes-2.json", Axes, r"Input should be a valid string"),
+    ("mixed-type-ndarray-1.json", NdArray, r"dataType and NdArray type must both be float"),
+    ("mixed-type-ndarray-2.json", NdArray, r"dataType and NdArray type must both be string"),
 ]
 
 

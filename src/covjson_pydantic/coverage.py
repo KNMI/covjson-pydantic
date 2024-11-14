@@ -22,7 +22,7 @@ class Coverage(CovJsonBaseModel, extra="allow"):
     domain: Domain
     parameters: Optional[Dict[str, Parameter]] = None
     parameterGroups: Optional[List[ParameterGroup]] = None  # noqa: N815
-    ranges: Dict[str, Union[NdArray, TiledNdArray, AnyUrl]]
+    ranges: Dict[str, Union[NdArray[float], NdArray[str], TiledNdArray, AnyUrl]]
 
 
 class CoverageCollection(CovJsonBaseModel, extra="allow"):
