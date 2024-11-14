@@ -18,6 +18,7 @@ happy_cases = [
     ("spec-axes.json", Axes),
     ("str-axes.json", Axes),
     ("coverage-json.json", Coverage),
+    ("coverage-mixed-type-ndarray.json", Coverage),
     ("doc-example-coverage.json", Coverage),
     ("spec-vertical-profile-coverage.json", Coverage),
     ("spec-trajectory-coverage.json", Coverage),
