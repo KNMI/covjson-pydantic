@@ -6,6 +6,7 @@ from covjson_pydantic.coverage import Coverage
 from covjson_pydantic.coverage import CoverageCollection
 from covjson_pydantic.domain import Axes
 from covjson_pydantic.domain import Domain
+from covjson_pydantic.ndarray import DataType
 from covjson_pydantic.ndarray import NdArray
 from covjson_pydantic.ndarray import TiledNdArray
 from covjson_pydantic.parameter import Parameter
@@ -86,3 +87,12 @@ def test_error_cases(file_name, object_type, error_message):
 
     with pytest.raises(ValidationError, match=error_message):
         object_type.model_validate_json(json_string)
+
+
+def test_ndarray_set_datetype():
+    nd = NdArray[float](axisNames=["x", "y", "t"], shape=[1, 1, 1], values=[42.0])
+    assert nd.dataType == DataType.float
+    nd = NdArray[int](axisNames=["x", "y", "t"], shape=[1, 1, 1], values=[42])
+    assert nd.dataType == DataType.int
+    nd = NdArray[str](axisNames=["x", "y", "t"], shape=[1, 1, 1], values=["foo"])
+    assert nd.dataType == DataType.str
