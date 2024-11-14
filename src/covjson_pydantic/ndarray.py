@@ -4,6 +4,7 @@ from enum import Enum
 from typing import List
 from typing import Literal
 from typing import Optional
+from typing import Union
 
 from pydantic import model_validator
 from typing_extensions import Generic
@@ -23,7 +24,7 @@ NdArrayTypeT = TypeVar("NdArrayTypeT")
 
 class NdArray(CovJsonBaseModel, Generic[NdArrayTypeT], extra="allow"):
     type: Literal["NdArray"] = "NdArray"
-    dataType: DataType | None = None  # noqa: N815
+    dataType: Union[DataType, None] = None  # noqa: N815
     axisNames: Optional[List[str]] = None  # noqa: N815
     shape: Optional[List[int]] = None
     values: List[Optional[NdArrayTypeT]] = []
