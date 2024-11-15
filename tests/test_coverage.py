@@ -72,6 +72,8 @@ error_cases = [
     ("mixed-type-axes.json", Axes, r"Input should be a valid number"),
     ("mixed-type-axes-2.json", Axes, r"Input should be a valid string"),
     ("mixed-type-ndarray-1.json", NdArrayFloat, r"Input should be a valid number"),
+    ("mixed-type-ndarray-1.json", NdArrayStr, r"Input should be 'string'"),
+    ("mixed-type-ndarray-2.json", NdArrayFloat, r"Input should be a valid number"),
     ("mixed-type-ndarray-2.json", NdArrayStr, r"Input should be 'string'"),
     ("mixed-type-ndarray-3.json", NdArrayInt, r"Input should be a valid integer"),
     ("mixed-type-ndarray-3.json", NdArrayFloat, r"Input should be 'float'"),
