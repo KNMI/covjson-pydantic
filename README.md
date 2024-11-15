@@ -39,7 +39,7 @@ from datetime import datetime, timezone
 from pydantic import AwareDatetime
 from covjson_pydantic.coverage import Coverage
 from covjson_pydantic.domain import Domain, Axes, ValuesAxis, DomainType
-from covjson_pydantic.ndarray import NdArray
+from covjson_pydantic.ndarray import NdArrayFloat
 
 c = Coverage(
     domain=Domain(
@@ -51,7 +51,7 @@ c = Coverage(
         )
     ),
     ranges={
-        "temperature": NdArray[float](axisNames=["x", "y", "t"], shape=[1, 1, 1], values=[42.0])
+        "temperature": NdArrayFloat(axisNames=["x", "y", "t"], shape=[1, 1, 1], values=[42.0])
     }
 )
 

@@ -9,7 +9,9 @@ from pydantic import AnyUrl
 from .base_models import CovJsonBaseModel
 from .domain import Domain
 from .domain import DomainType
-from .ndarray import NdArray
+from .ndarray import NdArrayFloat
+from .ndarray import NdArrayInt
+from .ndarray import NdArrayStr
 from .ndarray import TiledNdArray
 from .parameter import Parameter
 from .parameter import ParameterGroup
@@ -22,7 +24,7 @@ class Coverage(CovJsonBaseModel, extra="allow"):
     domain: Domain
     parameters: Optional[Dict[str, Parameter]] = None
     parameterGroups: Optional[List[ParameterGroup]] = None  # noqa: N815
-    ranges: Dict[str, Union[NdArray[float], NdArray[int], NdArray[str], TiledNdArray, AnyUrl]]
+    ranges: Dict[str, Union[NdArrayFloat, NdArrayInt, NdArrayStr, TiledNdArray, AnyUrl]]
 
 
 class CoverageCollection(CovJsonBaseModel, extra="allow"):

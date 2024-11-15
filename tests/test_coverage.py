@@ -6,8 +6,10 @@ from covjson_pydantic.coverage import Coverage
 from covjson_pydantic.coverage import CoverageCollection
 from covjson_pydantic.domain import Axes
 from covjson_pydantic.domain import Domain
-from covjson_pydantic.ndarray import DataType
 from covjson_pydantic.ndarray import NdArray
+from covjson_pydantic.ndarray import NdArrayFloat
+from covjson_pydantic.ndarray import NdArrayInt
+from covjson_pydantic.ndarray import NdArrayStr
 from covjson_pydantic.ndarray import TiledNdArray
 from covjson_pydantic.parameter import Parameter
 from covjson_pydantic.parameter import ParameterGroup
@@ -34,10 +36,10 @@ happy_cases = [
     ("spec-domain-multipoint-series.json", Domain),
     ("spec-domain-multipoint.json", Domain),
     ("spec-domain-trajectory.json", Domain),
-    ("ndarray-float.json", NdArray[float]),
-    ("ndarray-string.json", NdArray[str]),
-    ("ndarray-integer.json", NdArray[int]),
-    ("spec-ndarray.json", NdArray[float]),
+    ("ndarray-float.json", NdArrayFloat),
+    ("ndarray-string.json", NdArrayStr),
+    ("ndarray-integer.json", NdArrayInt),
+    ("spec-ndarray.json", NdArrayFloat),
     ("spec-tiled-ndarray.json", TiledNdArray),
     ("continuous-data-parameter.json", Parameter),
     ("categorical-data-parameter.json", Parameter),
@@ -69,11 +71,10 @@ error_cases = [
     ("point-series-domain-no-t.json", Domain, r"A 'PointSeries' must have a 't'-axis."),
     ("mixed-type-axes.json", Axes, r"Input should be a valid number"),
     ("mixed-type-axes-2.json", Axes, r"Input should be a valid string"),
-    ("mixed-type-ndarray-1.json", NdArray[float], r"Input should be a valid number"),
-    ("mixed-type-ndarray-1.json", NdArray, r"No NdArray type given, please specify as NdArray\[float\]"),
-    ("mixed-type-ndarray-2.json", NdArray[str], r"dataType and NdArray type must both be float"),
-    ("mixed-type-ndarray-3.json", NdArray[int], r"Input should be a valid integer"),
-    ("mixed-type-ndarray-3.json", NdArray[float], r"dataType and NdArray type must both be integer"),
+    ("mixed-type-ndarray-1.json", NdArrayFloat, r"Input should be a valid number"),
+    ("mixed-type-ndarray-2.json", NdArrayStr, r"Input should be 'string'"),
+    ("mixed-type-ndarray-3.json", NdArrayInt, r"Input should be a valid integer"),
+    ("mixed-type-ndarray-3.json", NdArrayFloat, r"Input should be 'float'"),
 ]
 
 
@@ -89,10 +90,6 @@ def test_error_cases(file_name, object_type, error_message):
         object_type.model_validate_json(json_string)
 
 
-def test_ndarray_set_datetype():
-    nd = NdArray[float](axisNames=["x", "y", "t"], shape=[1, 1, 1], values=[42.0])
-    assert nd.dataType == DataType.float
-    nd = NdArray[int](axisNames=["x", "y", "t"], shape=[1, 1, 1], values=[42])
-    assert nd.dataType == DataType.int
-    nd = NdArray[str](axisNames=["x", "y", "t"], shape=[1, 1, 1], values=["foo"])
-    assert nd.dataType == DataType.str
+def test_ndarray_directly():
+    with pytest.raises(TypeError, match="NdArray cannot be instantiated directly"):
+        NdArray(axisNames=["x", "y", "t"], shape=[1, 1, 1], values=[42.0])

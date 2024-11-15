@@ -1,69 +1,25 @@
 import math
-import typing
-from enum import Enum
 from typing import List
 from typing import Literal
 from typing import Optional
-from typing import Union
 
 from pydantic import model_validator
-from typing_extensions import Generic
-from typing_extensions import TypeVar
 
 from .base_models import CovJsonBaseModel
 
 
-class DataType(str, Enum):
-    float = "float"
-    str = "string"
-    int = "integer"
-
-
-NdArrayTypeT = TypeVar("NdArrayTypeT")
-
-
-class NdArray(CovJsonBaseModel, Generic[NdArrayTypeT], extra="allow"):
+class NdArray(CovJsonBaseModel, extra="allow"):
     type: Literal["NdArray"] = "NdArray"
-    dataType: Union[DataType, None] = None  # noqa: N815
+    dataType: str  # Kept here to ensure order of output in JSON  # noqa: N815
     axisNames: Optional[List[str]] = None  # noqa: N815
     shape: Optional[List[int]] = None
-    values: List[Optional[NdArrayTypeT]] = []
 
-    @model_validator(mode="before")
-    @classmethod
-    def set_data_type(cls, v):
-        if type(v) is not dict:
-            return v
-
-        if "dataType" in v:
-            v["dataType"] = DataType(v["dataType"])
-            return v
-
-        t = typing.get_args(cls.model_fields["values"].annotation)[0]
-        if t == typing.Optional[float]:
-            v["dataType"] = DataType.float
-        elif t == typing.Optional[int]:
-            v["dataType"] = DataType.int
-        elif t == typing.Optional[str]:
-            v["dataType"] = DataType.str
-        else:
-            raise ValueError(f"Unsupported NdArray type: {t}")
-        return v
-
-    @model_validator(mode="after")
-    def check_data_type(self):
-        t = typing.get_args(self.model_fields["values"].annotation)[0]
-        if t == typing.Optional[NdArrayTypeT]:
-            given_type = self.dataType.name if isinstance(self.dataType, DataType) else ""
-            raise ValueError(f"No NdArray type given, please specify as NdArray[{given_type}]")
-        if self.dataType == DataType.float and not t == typing.Optional[float]:
-            raise ValueError("dataType and NdArray type must both be float.")
-        if self.dataType == DataType.str and not t == typing.Optional[str]:
-            raise ValueError("dataType and NdArray type must both be string.")
-        if self.dataType == DataType.int and not t == typing.Optional[int]:
-            raise ValueError("dataType and NdArray type must both be integer.")
-
-        return self
+    def __new__(cls, *args, **kwargs):
+        if cls is NdArray:
+            raise TypeError(
+                "NdArray cannot be instantiated directly, please use a NdArrayFloat, NdArrayInt or NdArrayStr"
+            )
+        return super().__new__(cls)
 
     @model_validator(mode="after")
     def check_field_dependencies(self):
@@ -87,6 +43,21 @@ class NdArray(CovJsonBaseModel, Generic[NdArrayTypeT], extra="allow"):
         return self
 
 
+class NdArrayFloat(NdArray):
+    dataType: Literal["float"] = "float"  # noqa: N815
+    values: List[Optional[float]]
+
+
+class NdArrayInt(NdArray):
+    dataType: Literal["integer"] = "integer"  # noqa: N815
+    values: List[Optional[int]]
+
+
+class NdArrayStr(NdArray):
+    dataType: Literal["string"] = "string"  # noqa: N815
+    values: List[Optional[str]]
+
+
 class TileSet(CovJsonBaseModel):
     tileShape: List[Optional[int]]  # noqa: N815
     urlTemplate: str  # noqa: N815
@@ -95,7 +66,7 @@ class TileSet(CovJsonBaseModel):
 # TODO: Validation of field dependencies
 class TiledNdArray(CovJsonBaseModel, extra="allow"):
     type: Literal["TiledNdArray"] = "TiledNdArray"
-    dataType: DataType = DataType.float  # noqa: N815
+    dataType: Literal["float"] = "float"  # noqa: N815
     axisNames: List[str]  # noqa: N815
     shape: List[int]
     tileSets: List[TileSet]  # noqa: N815
