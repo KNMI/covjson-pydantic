@@ -10,7 +10,7 @@ from covjson_pydantic.ndarray import NdArray
 from covjson_pydantic.ndarray import NdArrayFloat
 from covjson_pydantic.ndarray import NdArrayInt
 from covjson_pydantic.ndarray import NdArrayStr
-from covjson_pydantic.ndarray import TiledNdArray
+from covjson_pydantic.ndarray import TiledNdArrayFloat
 from covjson_pydantic.parameter import Parameter
 from covjson_pydantic.parameter import ParameterGroup
 from covjson_pydantic.reference_system import ReferenceSystem
@@ -40,7 +40,7 @@ happy_cases = [
     ("ndarray-string.json", NdArrayStr),
     ("ndarray-integer.json", NdArrayInt),
     ("spec-ndarray.json", NdArrayFloat),
-    ("spec-tiled-ndarray.json", TiledNdArray),
+    ("spec-tiled-ndarray.json", TiledNdArrayFloat),
     ("continuous-data-parameter.json", Parameter),
     ("categorical-data-parameter.json", Parameter),
     ("spec-parametergroup.json", ParameterGroup),

@@ -12,7 +12,7 @@ from .domain import DomainType
 from .ndarray import NdArrayFloat
 from .ndarray import NdArrayInt
 from .ndarray import NdArrayStr
-from .ndarray import TiledNdArray
+from .ndarray import TiledNdArrayFloat
 from .parameter import Parameter
 from .parameter import ParameterGroup
 from .reference_system import ReferenceSystemConnectionObject
@@ -24,7 +24,7 @@ class Coverage(CovJsonBaseModel, extra="allow"):
     domain: Domain
     parameters: Optional[Dict[str, Parameter]] = None
     parameterGroups: Optional[List[ParameterGroup]] = None  # noqa: N815
-    ranges: Dict[str, Union[NdArrayFloat, NdArrayInt, NdArrayStr, TiledNdArray, AnyUrl]]
+    ranges: Dict[str, Union[NdArrayFloat, NdArrayInt, NdArrayStr, TiledNdArrayFloat, AnyUrl]]
 
 
 class CoverageCollection(CovJsonBaseModel, extra="allow"):

@@ -64,7 +64,8 @@ class TileSet(CovJsonBaseModel):
 
 
 # TODO: Validation of field dependencies
-class TiledNdArray(CovJsonBaseModel, extra="allow"):
+# TODO: Support string and integer type TiledNdArray
+class TiledNdArrayFloat(CovJsonBaseModel, extra="allow"):
     type: Literal["TiledNdArray"] = "TiledNdArray"
     dataType: Literal["float"] = "float"  # noqa: N815
     axisNames: List[str]  # noqa: N815
