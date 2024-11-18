@@ -140,8 +140,7 @@ This library is used to build an OGC Environmental Data Retrieval (EDR) API, ser
 ## TODOs
 Help is wanted in the following areas to fully implement the CovJSON spec:
 * The polygon based domain types are not supported.
-* The `Trajectory` and `Section` domain type are not supported.
-* The `NdArray` only supports `float` data.
+* The `Section` domain type is not supported.
 * Not all requirements in the spec relating different fields are implemented.
 
 ## License
