@@ -1,6 +1,10 @@
-from __future__ import annotations
+import sys
 
-from typing import Annotated
+if sys.version_info < (3, 9):
+    from typing_extensions import Annotated
+else:
+    from typing import Annotated
+
 from typing import Dict
 from typing import List
 from typing import Literal
