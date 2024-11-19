@@ -14,12 +14,14 @@ class NdArray(CovJsonBaseModel, extra="allow"):
     axisNames: Optional[List[str]] = None  # noqa: N815
     shape: Optional[List[int]] = None
 
-    def __new__(cls, *args, **kwargs):
+    @model_validator(mode="before")
+    @classmethod
+    def validate_is_sub_class(cls, values):
         if cls is NdArray:
             raise TypeError(
                 "NdArray cannot be instantiated directly, please use a NdArrayFloat, NdArrayInt or NdArrayStr"
             )
-        return super().__new__(cls)
+        return values
 
     @model_validator(mode="after")
     def check_field_dependencies(self):
