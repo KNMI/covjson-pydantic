@@ -1,5 +1,4 @@
 import math
-from enum import Enum
 from typing import List
 from typing import Literal
 from typing import Optional
@@ -9,17 +8,20 @@ from pydantic import model_validator
 from .base_models import CovJsonBaseModel
 
 
-# TODO: Support for integers and strings
-class DataType(str, Enum):
-    float = "float"
-
-
 class NdArray(CovJsonBaseModel, extra="allow"):
     type: Literal["NdArray"] = "NdArray"
-    dataType: DataType = DataType.float  # noqa: N815
+    dataType: str  # Kept here to ensure order of output in JSON  # noqa: N815
     axisNames: Optional[List[str]] = None  # noqa: N815
     shape: Optional[List[int]] = None
-    values: List[Optional[float]]
+
+    @model_validator(mode="before")
+    @classmethod
+    def validate_is_sub_class(cls, values):
+        if cls is NdArray:
+            raise TypeError(
+                "NdArray cannot be instantiated directly, please use a NdArrayFloat, NdArrayInt or NdArrayStr"
+            )
+        return values
 
     @model_validator(mode="after")
     def check_field_dependencies(self):
@@ -43,15 +45,31 @@ class NdArray(CovJsonBaseModel, extra="allow"):
         return self
 
 
+class NdArrayFloat(NdArray):
+    dataType: Literal["float"] = "float"  # noqa: N815
+    values: List[Optional[float]]
+
+
+class NdArrayInt(NdArray):
+    dataType: Literal["integer"] = "integer"  # noqa: N815
+    values: List[Optional[int]]
+
+
+class NdArrayStr(NdArray):
+    dataType: Literal["string"] = "string"  # noqa: N815
+    values: List[Optional[str]]
+
+
 class TileSet(CovJsonBaseModel):
     tileShape: List[Optional[int]]  # noqa: N815
     urlTemplate: str  # noqa: N815
 
 
 # TODO: Validation of field dependencies
-class TiledNdArray(CovJsonBaseModel, extra="allow"):
+# TODO: Support string and integer type TiledNdArray
+class TiledNdArrayFloat(CovJsonBaseModel, extra="allow"):
     type: Literal["TiledNdArray"] = "TiledNdArray"
-    dataType: DataType = DataType.float  # noqa: N815
+    dataType: Literal["float"] = "float"  # noqa: N815
     axisNames: List[str]  # noqa: N815
     shape: List[int]
     tileSets: List[TileSet]  # noqa: N815

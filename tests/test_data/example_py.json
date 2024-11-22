@@ -1,0 +1,43 @@
+{
+    "type": "Coverage",
+    "domain": {
+        "type": "Domain",
+        "domainType": "PointSeries",
+        "axes": {
+            "x": {
+                "values": [
+                    1.23
+                ]
+            },
+            "y": {
+                "values": [
+                    4.56
+                ]
+            },
+            "t": {
+                "values": [
+                    "2024-08-01T00:00:00Z"
+                ]
+            }
+        }
+    },
+    "ranges": {
+        "temperature": {
+            "type": "NdArray",
+            "dataType": "float",
+            "axisNames": [
+                "x",
+                "y",
+                "t"
+            ],
+            "shape": [
+                1,
+                1,
+                1
+            ],
+            "values": [
+                42.0
+            ]
+        }
+    }
+}

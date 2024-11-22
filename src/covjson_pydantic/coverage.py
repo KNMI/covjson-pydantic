@@ -1,3 +1,10 @@
+import sys
+
+if sys.version_info < (3, 9):
+    from typing_extensions import Annotated
+else:
+    from typing import Annotated
+
 from typing import Dict
 from typing import List
 from typing import Literal
@@ -5,15 +12,20 @@ from typing import Optional
 from typing import Union
 
 from pydantic import AnyUrl
+from pydantic import Field
 
 from .base_models import CovJsonBaseModel
 from .domain import Domain
 from .domain import DomainType
-from .ndarray import NdArray
-from .ndarray import TiledNdArray
+from .ndarray import NdArrayFloat
+from .ndarray import NdArrayInt
+from .ndarray import NdArrayStr
+from .ndarray import TiledNdArrayFloat
 from .parameter import Parameter
 from .parameter import ParameterGroup
 from .reference_system import ReferenceSystemConnectionObject
+
+NdArrayTypes = Annotated[Union[NdArrayFloat, NdArrayInt, NdArrayStr], Field(discriminator="dataType")]
 
 
 class Coverage(CovJsonBaseModel, extra="allow"):
@@ -22,7 +34,7 @@ class Coverage(CovJsonBaseModel, extra="allow"):
     domain: Domain
     parameters: Optional[Dict[str, Parameter]] = None
     parameterGroups: Optional[List[ParameterGroup]] = None  # noqa: N815
-    ranges: Dict[str, Union[NdArray, TiledNdArray, AnyUrl]]
+    ranges: Dict[str, Union[NdArrayTypes, TiledNdArrayFloat, AnyUrl]]
 
 
 class CoverageCollection(CovJsonBaseModel, extra="allow"):

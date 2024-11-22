@@ -39,7 +39,7 @@ from datetime import datetime, timezone
 from pydantic import AwareDatetime
 from covjson_pydantic.coverage import Coverage
 from covjson_pydantic.domain import Domain, Axes, ValuesAxis, DomainType
-from covjson_pydantic.ndarray import NdArray
+from covjson_pydantic.ndarray import NdArrayFloat
 
 c = Coverage(
     domain=Domain(
@@ -47,11 +47,11 @@ c = Coverage(
         axes=Axes(
             x=ValuesAxis[float](values=[1.23]),
             y=ValuesAxis[float](values=[4.56]),
-            t=ValuesAxis[AwareDatetime](values=[datetime.now(tz=timezone.utc)])
-        )
+            t=ValuesAxis[AwareDatetime](values=[datetime(2024, 8, 1, tzinfo=timezone.utc)]),
+        ),
     ),
     ranges={
-        "temperature": NdArray(axisNames=["x", "y", "t"], shape=[1, 1, 1], values=[42.0])
+        "temperature": NdArrayFloat(axisNames=["x", "y", "t"], shape=[1, 1, 1], values=[42.0])
     }
 )
 
@@ -77,7 +77,7 @@ Will print
             },
             "t": {
                 "values": [
-                    "2023-09-14T11:54:02.151493Z"
+                    "2024-08-01T00:00:00Z"
                 ]
             }
         }
@@ -140,8 +140,7 @@ This library is used to build an OGC Environmental Data Retrieval (EDR) API, ser
 ## TODOs
 Help is wanted in the following areas to fully implement the CovJSON spec:
 * The polygon based domain types are not supported.
-* The `Trajectory` and `Section` domain type are not supported.
-* The `NdArray` only supports `float` data.
+* The `Section` domain type is not supported.
 * Not all requirements in the spec relating different fields are implemented.
 
 ## License
