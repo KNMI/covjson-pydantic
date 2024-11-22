@@ -1,4 +1,6 @@
 import json
+import sys
+from io import StringIO
 from pathlib import Path
 
 import pytest
@@ -23,6 +25,7 @@ happy_cases = [
     ("coverage-json.json", Coverage),
     ("coverage-mixed-type-ndarray.json", Coverage),
     ("doc-example-coverage.json", Coverage),
+    ("example_py.json", Coverage),
     ("spec-vertical-profile-coverage.json", Coverage),
     ("spec-trajectory-coverage.json", Coverage),
     ("doc-example-coverage-collection.json", CoverageCollection),
@@ -95,3 +98,19 @@ def test_error_cases(file_name, object_type, error_message):
 def test_ndarray_directly():
     with pytest.raises(TypeError, match="NdArray cannot be instantiated directly"):
         NdArray(axisNames=["x", "y", "t"], shape=[1, 1, 1], values=[42.0])
+
+
+def test_example_py():
+    file = Path(__file__).parent.parent.resolve() / "example.py"
+
+    with open(file, "r") as f:
+        code = f.read()
+
+    old_stdout = sys.stdout
+    sys.stdout = my_stdout = StringIO()
+    exec(code)
+    sys.stdout = old_stdout
+
+    file = Path(__file__).parent.resolve() / "test_data" / "example_py.json"
+    with open(file, "r") as f:
+        assert my_stdout.getvalue() == f.read()

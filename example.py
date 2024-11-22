@@ -15,7 +15,7 @@ c = Coverage(
         axes=Axes(
             x=ValuesAxis[float](values=[1.23]),
             y=ValuesAxis[float](values=[4.56]),
-            t=ValuesAxis[AwareDatetime](values=[datetime.now(tz=timezone.utc)]),
+            t=ValuesAxis[AwareDatetime](values=[datetime(2024, 8, 1, tzinfo=timezone.utc)]),
         ),
     ),
     ranges={"temperature": NdArrayFloat(axisNames=["x", "y", "t"], shape=[1, 1, 1], values=[42.0])},
