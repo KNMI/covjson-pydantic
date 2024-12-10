@@ -5,6 +5,7 @@ from typing import Optional
 from typing import Union
 
 from pydantic import model_validator
+from pydantic import RootModel
 
 from .base_models import CovJsonBaseModel
 from .i18n import i18n
@@ -30,6 +31,9 @@ class Parameter(CovJsonBaseModel, extra="allow"):
             )
 
         return self
+
+
+Parameters = RootModel[Dict[str, Parameter]]
 
 
 class ParameterGroup(CovJsonBaseModel, extra="allow"):
