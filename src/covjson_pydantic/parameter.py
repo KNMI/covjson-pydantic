@@ -33,7 +33,17 @@ class Parameter(CovJsonBaseModel, extra="allow"):
         return self
 
 
-Parameters = RootModel[Dict[str, Parameter]]
+class Parameters(RootModel):
+    root: Dict[str, Parameter]
+
+    def __iter__(self):
+        return iter(self.root)
+
+    def __getitem__(self, key):
+        return self.root[key]
+
+    def get(self, key, default=None):
+        return self.root.get(key, default)
 
 
 class ParameterGroup(CovJsonBaseModel, extra="allow"):

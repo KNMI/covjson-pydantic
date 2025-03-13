@@ -15,6 +15,7 @@ from covjson_pydantic.ndarray import NdArrayStr
 from covjson_pydantic.ndarray import TiledNdArrayFloat
 from covjson_pydantic.parameter import Parameter
 from covjson_pydantic.parameter import ParameterGroup
+from covjson_pydantic.parameter import Parameters
 from covjson_pydantic.reference_system import ReferenceSystem
 from pydantic import ValidationError
 
@@ -114,3 +115,13 @@ def test_example_py():
     file = Path(__file__).parent.resolve() / "test_data" / "example_py.json"
     with open(file, "r") as f:
         assert my_stdout.getvalue() == f.read()
+
+
+def test_parameters_root_model():
+    file = Path(__file__).parent.resolve() / "test_data" / "parameters.json"
+    with open(file, "r") as f:
+        parameters = Parameters.model_validate_json(f.read())
+
+    assert parameters["PSAL"].observedProperty.label["en"] == "Sea Water Salinity"
+    assert parameters.get("POTM").observedProperty.label["en"] == "Sea Water Potential Temperature"
+    assert len([p for p in parameters]) == 2
