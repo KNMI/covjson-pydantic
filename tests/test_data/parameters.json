@@ -2,31 +2,31 @@
     "PSAL": {
         "type": "Parameter",
         "description": {
-            "en": "The measured salinity, in practical salinity units (psu) of the sea water "
-        },
-        "unit": {
-            "symbol": "psu"
+            "en": "The measured salinity, in practical salinity units (psu) of the sea water"
         },
         "observedProperty": {
-            "id": "http://vocab.nerc.ac.uk/standard_name/sea_water_salinity/",
+            "id": "https://vocab.nerc.ac.uk/standard_name/sea_water_salinity/",
             "label": {
                 "en": "Sea Water Salinity"
             }
+        },
+        "unit": {
+            "symbol": "psu"
         }
     },
     "POTM": {
         "type": "Parameter",
         "description": {
-            "en": "The potential temperature, in degrees celcius, of the sea water"
-        },
-        "unit": {
-            "symbol": "°C"
+            "en": "The potential temperature, in degrees Celsius, of the sea water"
         },
         "observedProperty": {
-            "id": "http://vocab.nerc.ac.uk/standard_name/sea_water_potential_temperature/",
+            "id": "https://vocab.nerc.ac.uk/standard_name/sea_water_potential_temperature/",
             "label": {
                 "en": "Sea Water Potential Temperature"
             }
+        },
+        "unit": {
+            "symbol": "°C"
         }
     }
 }

@@ -47,6 +47,7 @@ happy_cases = [
     ("spec-tiled-ndarray.json", TiledNdArrayFloat),
     ("continuous-data-parameter.json", Parameter),
     ("categorical-data-parameter.json", Parameter),
+    ("parameters.json", Parameters),
     ("spec-parametergroup.json", ParameterGroup),
     ("spec-reference-system-identifierrs.json", ReferenceSystem),
 ]
@@ -58,7 +59,7 @@ def test_happy_cases(file_name, object_type):
     # Put JSON in default unindented format
     with open(file, "r") as f:
         data = json.load(f)
-    json_string = json.dumps(data, separators=(",", ":"))
+    json_string = json.dumps(data, separators=(",", ":"), ensure_ascii=False)
 
     # Round-trip
     assert object_type.model_validate_json(json_string).model_dump_json(exclude_none=True) == json_string
