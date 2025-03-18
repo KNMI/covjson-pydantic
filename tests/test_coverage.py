@@ -15,6 +15,7 @@ from covjson_pydantic.ndarray import NdArrayStr
 from covjson_pydantic.ndarray import TiledNdArrayFloat
 from covjson_pydantic.parameter import Parameter
 from covjson_pydantic.parameter import ParameterGroup
+from covjson_pydantic.parameter import Parameters
 from covjson_pydantic.reference_system import ReferenceSystem
 from pydantic import ValidationError
 
@@ -46,6 +47,7 @@ happy_cases = [
     ("spec-tiled-ndarray.json", TiledNdArrayFloat),
     ("continuous-data-parameter.json", Parameter),
     ("categorical-data-parameter.json", Parameter),
+    ("parameters.json", Parameters),
     ("spec-parametergroup.json", ParameterGroup),
     ("spec-reference-system-identifierrs.json", ReferenceSystem),
 ]
@@ -57,7 +59,7 @@ def test_happy_cases(file_name, object_type):
     # Put JSON in default unindented format
     with open(file, "r") as f:
         data = json.load(f)
-    json_string = json.dumps(data, separators=(",", ":"))
+    json_string = json.dumps(data, separators=(",", ":"), ensure_ascii=False)
 
     # Round-trip
     assert object_type.model_validate_json(json_string).model_dump_json(exclude_none=True) == json_string
@@ -114,3 +116,13 @@ def test_example_py():
     file = Path(__file__).parent.resolve() / "test_data" / "example_py.json"
     with open(file, "r") as f:
         assert my_stdout.getvalue() == f.read()
+
+
+def test_parameters_root_model():
+    file = Path(__file__).parent.resolve() / "test_data" / "parameters.json"
+    with open(file, "r") as f:
+        parameters = Parameters.model_validate_json(f.read())
+
+    assert parameters["PSAL"].observedProperty.label["en"] == "Sea Water Salinity"
+    assert parameters.get("POTM").observedProperty.label["en"] == "Sea Water Potential Temperature"
+    assert len([p for p in parameters]) == 2
