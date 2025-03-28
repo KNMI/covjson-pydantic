@@ -1,0 +1,135 @@
+{
+    "type": "CoverageCollection",
+    "coverages": [
+        {
+            "type": "Coverage",
+            "domain": {
+                "type": "Domain",
+                "axes": {
+                    "t": {
+                        "dataType": "time",
+                        "values": [
+                            "2016-01-01T00:00:00Z",
+                            "2016-02-01T00:00:00Z",
+                            "2016-03-01T00:00:00Z"
+                        ]
+                    },
+                    "composite": {
+                        "dataType": "Polygon",
+                        "coordinates": [
+                            "x",
+                            "y"
+                        ],
+                        "values": [
+                            [
+                                [
+                                    [
+                                        -105.67217,
+                                        36.02425
+                                    ],
+                                    [
+                                        -105.88091,
+                                        35.24744
+                                    ],
+                                    [
+                                        -105.01299,
+                                        32.0286
+                                    ],
+                                    [
+                                        -103.54082,
+                                        32.07516
+                                    ],
+                                    [
+                                        -104.06816,
+                                        34.75247
+                                    ],
+                                    [
+                                        -105.67217,
+                                        36.02425
+                                    ]
+                                ]
+                            ]
+                        ]
+                    }
+                }
+            },
+            "ranges": {
+                "Lake/Reservoir Storage End of Month": {
+                    "type": "NdArray",
+                    "dataType": "float",
+                    "axisNames": [
+                        "t"
+                    ],
+                    "shape": [
+                        3
+                    ],
+                    "values": [
+                        1.0,
+                        2.0,
+                        42.0
+                    ]
+                }
+            },
+            "domainType": "PolygonSeries"
+        }
+    ],
+    "parameters": {
+        "Lake/Reservoir Storage End of Month": {
+            "type": "Parameter",
+            "description": {
+                "en": "Instant daily lake/reservoir storage volume in acre-feet. Monthly refers to one measurement on the last day of each month."
+            },
+            "observedProperty": {
+                "id": "1470",
+                "label": {
+                    "en": "Lake/Reservoir Storage End of Month"
+                }
+            },
+            "unit": {
+                "symbol": "af"
+            }
+        }
+    },
+    "referencing": [
+        {
+            "coordinates": [
+                "x",
+                "y"
+            ],
+            "system": {
+                "type": "GeographicCRS",
+                "id": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            }
+        },
+        {
+            "coordinates": [
+                "z"
+            ],
+            "system": {
+                "type": "VerticalCRS",
+                "cs": {
+                    "csAxes": [
+                        {
+                            "name": {
+                                "en": "time"
+                            },
+                            "direction": "down",
+                            "unit": {
+                                "symbol": "time"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "coordinates": [
+                "t"
+            ],
+            "system": {
+                "type": "TemporalRS",
+                "calendar": "Gregorian"
+            }
+        }
+    ]
+}
