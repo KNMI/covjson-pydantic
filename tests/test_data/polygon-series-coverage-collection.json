@@ -5,9 +5,9 @@
             "type": "Coverage",
             "domain": {
                 "type": "Domain",
+                "domainType": "PolygonSeries",
                 "axes": {
                     "t": {
-                        "dataType": "time",
                         "values": [
                             "2016-01-01T00:00:00Z",
                             "2016-02-01T00:00:00Z",
@@ -15,7 +15,7 @@
                         ]
                     },
                     "composite": {
-                        "dataType": "Polygon",
+                        "dataType": "polygon",
                         "coordinates": [
                             "x",
                             "y"
@@ -69,8 +69,7 @@
                         42.0
                     ]
                 }
-            },
-            "domainType": "PolygonSeries"
+            }
         }
     ],
     "parameters": {

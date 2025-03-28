@@ -1,5 +1,6 @@
 {
     "type": "Domain",
+    "domainType": "PolygonSeries",
     "axes": {
         "t": {
             "dataType": "time",
