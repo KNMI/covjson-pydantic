@@ -154,7 +154,7 @@ class Domain(CovJsonBaseModel, extra="allow"):
                 axes,
                 required_axes={"composite", "t"},
                 allowed_axes={"z"},
-                single_value_axes={"z"},
+                single_value_axes={"z", "composite"},
             )
 
         if domain_type == DomainType.point:
