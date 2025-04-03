@@ -11,7 +11,7 @@
             ]
         },
         "composite": {
-            "dataType": "Polygon",
+            "dataType": "polygon",
             "coordinates": [
                 "x",
                 "y"
