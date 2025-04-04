@@ -62,6 +62,7 @@ class Axes(CovJsonBaseModel):
     y: Optional[Union[ValuesAxis[float], ValuesAxis[str], CompactAxis]] = None
     z: Optional[Union[ValuesAxis[float], ValuesAxis[str], CompactAxis]] = None
     t: Optional[ValuesAxis[AwareDatetime]] = None
+    # TODO: Add better support for 'polygon' and 'tuple' composite axes
     composite: Optional[ValuesAxis[Tuple]] = None
 
     @model_validator(mode="after")
