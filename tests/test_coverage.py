@@ -17,6 +17,7 @@ from covjson_pydantic.parameter import Parameter
 from covjson_pydantic.parameter import ParameterGroup
 from covjson_pydantic.parameter import Parameters
 from covjson_pydantic.reference_system import ReferenceSystem
+from covjson_pydantic.reference_system import ReferenceSystemConnectionObject
 from pydantic import ValidationError
 
 
@@ -84,6 +85,11 @@ error_cases = [
     ("mixed-type-ndarray-2.json", NdArrayStr, r"Input should be 'string'"),
     ("mixed-type-ndarray-3.json", NdArrayInt, r"Input should be a valid integer"),
     ("mixed-type-ndarray-3.json", NdArrayFloat, r"Input should be 'float'"),
+    (
+        "temporalrs-no-calendar.json",
+        ReferenceSystemConnectionObject,
+        r"A temporal RS object MUST have a member 'calendar'",
+    ),
 ]
 
 

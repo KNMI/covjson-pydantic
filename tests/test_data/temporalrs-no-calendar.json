@@ -1,0 +1,9 @@
+{
+    "coordinates": [
+        "t"
+    ],
+    "system": {
+        "type": "TemporalRS",
+        "id": "http://www.opengis.net/def/crs/OGC/1.3/"
+    }
+}

@@ -36,6 +36,9 @@ class ReferenceSystem(CovJsonBaseModel, extra="allow"):
         if self.type != "TemporalRS" and (self.calendar is not None or self.timeScale is not None):
             raise ValueError("'calendar' and 'timeScale' fields can only be used for type 'TemporalRS'")
 
+        if self.type == "TemporalRS" and self.calendar is None:
+            raise ValueError("A temporal RS object MUST have a member 'calendar' with value 'Gregorian' or a URI")
+
         if self.type != "IdentifierRS" and (
             self.label is not None or self.targetConcept is not None or self.identifiers is not None
         ):
