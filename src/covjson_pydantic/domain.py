@@ -55,6 +55,7 @@ class DomainType(str, Enum):
     multi_point = "MultiPoint"
     trajectory = "Trajectory"
     polygon_series = "PolygonSeries"
+    polygon = "Polygon"
 
 
 class Axes(CovJsonBaseModel):
@@ -156,6 +157,15 @@ class Domain(CovJsonBaseModel, extra="allow"):
                 required_axes={"composite", "t"},
                 allowed_axes={"z"},
                 single_value_axes={"z", "composite"},
+            )
+
+        if domain_type == DomainType.polygon:
+            Domain.check_axis(
+                domain_type,
+                axes,
+                required_axes={"composite"},
+                allowed_axes={"z", "t"},
+                single_value_axes={"z", "composite", "t"},
             )
 
         if domain_type == DomainType.point:
