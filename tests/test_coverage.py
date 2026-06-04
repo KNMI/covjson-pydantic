@@ -12,7 +12,11 @@ from covjson_pydantic.ndarray import NdArray
 from covjson_pydantic.ndarray import NdArrayFloat
 from covjson_pydantic.ndarray import NdArrayInt
 from covjson_pydantic.ndarray import NdArrayStr
+from covjson_pydantic.ndarray import TiledNdArray
 from covjson_pydantic.ndarray import TiledNdArrayFloat
+from covjson_pydantic.ndarray import TiledNdArrayInt
+from covjson_pydantic.ndarray import TiledNdArrayStr
+from covjson_pydantic.ndarray import TileSet
 from covjson_pydantic.parameter import Parameter
 from covjson_pydantic.parameter import ParameterGroup
 from covjson_pydantic.parameter import Parameters
@@ -48,6 +52,8 @@ happy_cases = [
     ("ndarray-integer.json", NdArrayInt),
     ("spec-ndarray.json", NdArrayFloat),
     ("spec-tiled-ndarray.json", TiledNdArrayFloat),
+    ("tiled-ndarray-integer.json", TiledNdArrayInt),
+    ("tiled-ndarray-string.json", TiledNdArrayStr),
     ("continuous-data-parameter.json", Parameter),
     ("categorical-data-parameter.json", Parameter),
     ("parameters.json", Parameters),
@@ -90,6 +96,11 @@ error_cases = [
         ReferenceSystemConnectionObject,
         r"A temporal RS object MUST have a member 'calendar'",
     ),
+    ("tiled-ndarray-string.json", TiledNdArrayFloat, r"Input should be 'float'"),
+    ("tiled-ndarray-integer.json", TiledNdArrayStr, r"Input should be 'string'"),
+    ("tiled-ndarray-missing-tilesets.json", TiledNdArrayFloat, r"tileSets\n.*Field required"),
+    ("tiled-ndarray-missing-urltemplate.json", TiledNdArrayFloat, r"urlTemplate\n.*Field required"),
+    ("tiled-ndarray-invalid-tileshape.json", TiledNdArrayFloat, r"Input should be a valid integer"),
 ]
 
 
@@ -108,6 +119,16 @@ def test_error_cases(file_name, object_type, error_message):
 def test_ndarray_directly():
     with pytest.raises(TypeError, match="NdArray cannot be instantiated directly"):
         NdArray(axisNames=["x", "y", "t"], shape=[1, 1, 1], values=[42.0])
+
+
+def test_tiled_ndarray_directly():
+    with pytest.raises(TypeError, match="TiledNdArray cannot be instantiated directly"):
+        TiledNdArray(
+            dataType="float",
+            axisNames=["t", "y", "x"],
+            shape=[2, 5, 10],
+            tileSets=[TileSet(tileShape=[None, None, None], urlTemplate="http://example.com/a/all.covjson")],
+        )
 
 
 def test_example_py():
