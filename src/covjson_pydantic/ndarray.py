@@ -72,25 +72,3 @@ class TiledNdArray(CovJsonBaseModel, extra="allow"):
     axisNames: List[str]  # noqa: N815
     shape: List[int]
     tileSets: List[TileSet]  # noqa: N815
-
-    @model_validator(mode="before")
-    @classmethod
-    def validate_is_sub_class(cls, values):
-        if cls is TiledNdArray:
-            raise TypeError(
-                "TiledNdArray cannot be instantiated directly, please use a "
-                "TiledNdArrayFloat, TiledNdArrayInt or TiledNdArrayStr"
-            )
-        return values
-
-
-class TiledNdArrayFloat(TiledNdArray):
-    dataType: Literal["float"] = "float"  # noqa: N815
-
-
-class TiledNdArrayInt(TiledNdArray):
-    dataType: Literal["integer"] = "integer"  # noqa: N815
-
-
-class TiledNdArrayStr(TiledNdArray):
-    dataType: Literal["string"] = "string"  # noqa: N815

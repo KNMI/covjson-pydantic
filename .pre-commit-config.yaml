@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.0.1
+    rev: v6.0.0
     hooks:
       # Formatting
       - id: end-of-file-fixer  # Makes sure files end in a newline and only a newline.
@@ -23,17 +23,18 @@ repos:
 
   # reorder-python-imports ~ sort python imports
   - repo: https://github.com/asottile/reorder_python_imports
-    rev: v2.6.0
+    rev: v3.16.0
     hooks:
       - id: reorder-python-imports
 
   # black ~ Formats Python code
   - repo: https://github.com/psf/black
-    rev: 22.3.0
+    rev: 26.5.1
     hooks:
       - id: black
         args: [
-          '--line-length=120'
+          '--line-length=120',
+          '--target-version=py38'
         ]
 
   # flake8 ~ Enforces the Python PEP8 style guide
@@ -41,7 +42,7 @@ repos:
   # Ignore the unused imports (F401) for the __init__ files, the imports are not always used inside the file,
   # but used to setup how other files can import it in a more convenient way.
   - repo: https://github.com/pycqa/flake8
-    rev: 4.0.1
+    rev: 7.3.0
     hooks:
       - id: flake8
         args: [
@@ -53,7 +54,7 @@ repos:
         additional_dependencies: [ 'pep8-naming==0.12.1' ]
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.5.1
+    rev: v2.1.0
     hooks:
       - id: mypy
         language_version: python

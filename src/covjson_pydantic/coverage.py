@@ -20,17 +20,12 @@ from .domain import DomainType
 from .ndarray import NdArrayFloat
 from .ndarray import NdArrayInt
 from .ndarray import NdArrayStr
-from .ndarray import TiledNdArrayFloat
-from .ndarray import TiledNdArrayInt
-from .ndarray import TiledNdArrayStr
+from .ndarray import TiledNdArray
 from .parameter import Parameters
 from .parameter import ParameterGroup
 from .reference_system import ReferenceSystemConnectionObject
 
 NdArrayTypes = Annotated[Union[NdArrayFloat, NdArrayInt, NdArrayStr], Field(discriminator="dataType")]
-TiledNdArrayTypes = Annotated[
-    Union[TiledNdArrayFloat, TiledNdArrayInt, TiledNdArrayStr], Field(discriminator="dataType")
-]
 
 
 class Coverage(CovJsonBaseModel, extra="allow"):
@@ -39,7 +34,7 @@ class Coverage(CovJsonBaseModel, extra="allow"):
     domain: Domain
     parameters: Optional[Parameters] = None
     parameterGroups: Optional[List[ParameterGroup]] = None  # noqa: N815
-    ranges: Dict[str, Union[NdArrayTypes, TiledNdArrayTypes, AnyUrl]]
+    ranges: Dict[str, Union[NdArrayTypes, TiledNdArray, AnyUrl]]
 
 
 class CoverageCollection(CovJsonBaseModel, extra="allow"):

@@ -22,6 +22,7 @@
 This repository contains the coveragejson-pydantic Python package. It provides [Pydantic](https://pydantic-docs.helpmanual.io/) models for [CoverageJSON](https://covjson.org/). This can, for example, be used to develop an API using FastAPI serving or receiving CoverageJSON.
 
 ## Install
+
 ```shell
 pip install covjson-pydantic
 ```
@@ -57,7 +58,9 @@ c = Coverage(
 
 print(c.model_dump_json(exclude_none=True, indent=4))
 ```
+
 Will print
+
 ```json
 {
     "type": "Coverage",
@@ -138,7 +141,9 @@ pre-commit run
 This library is used to build an OGC Environmental Data Retrieval (EDR) API, serving automatic weather data station data from The Royal Netherlands Meteorological Institute (KNMI). See the [KNMI Data Platform EDR API](https://developer.dataplatform.knmi.nl/edr-api).
 
 ## TODOs
+
 Help is wanted in the following areas to fully implement the CovJSON spec:
+
 * The `Polygon`, `MultiPolygon` and `MultiPolygonSeries` domain types are not supported.
 * The `Section` domain type is not supported.
 * Not all requirements in the spec relating different fields are implemented.
