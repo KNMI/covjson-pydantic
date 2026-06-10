@@ -32,6 +32,7 @@ happy_cases = [
     ("spec-trajectory-coverage.json", Coverage),
     ("doc-example-coverage-collection.json", CoverageCollection),
     ("polygon-series-coverage-collection.json", CoverageCollection),
+    ("polygon-coverage-collection.json", CoverageCollection),
     ("grid-domain.json", Domain),
     ("point-series-domain-custom.json", Domain),
     ("spec-domain-grid.json", Domain),
