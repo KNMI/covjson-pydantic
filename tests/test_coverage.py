@@ -12,14 +12,13 @@ from covjson_pydantic.ndarray import NdArray
 from covjson_pydantic.ndarray import NdArrayFloat
 from covjson_pydantic.ndarray import NdArrayInt
 from covjson_pydantic.ndarray import NdArrayStr
-from covjson_pydantic.ndarray import TiledNdArrayFloat
+from covjson_pydantic.ndarray import TiledNdArray
 from covjson_pydantic.parameter import Parameter
 from covjson_pydantic.parameter import ParameterGroup
 from covjson_pydantic.parameter import Parameters
 from covjson_pydantic.reference_system import ReferenceSystem
 from covjson_pydantic.reference_system import ReferenceSystemConnectionObject
 from pydantic import ValidationError
-
 
 happy_cases = [
     ("spec-axes.json", Axes),
@@ -50,7 +49,9 @@ happy_cases = [
     ("ndarray-string.json", NdArrayStr),
     ("ndarray-integer.json", NdArrayInt),
     ("spec-ndarray.json", NdArrayFloat),
-    ("spec-tiled-ndarray.json", TiledNdArrayFloat),
+    ("spec-tiled-ndarray.json", TiledNdArray),
+    ("tiled-ndarray-integer.json", TiledNdArray),
+    ("tiled-ndarray-string.json", TiledNdArray),
     ("continuous-data-parameter.json", Parameter),
     ("categorical-data-parameter.json", Parameter),
     ("parameters.json", Parameters),
@@ -100,6 +101,9 @@ error_cases = [
         ReferenceSystemConnectionObject,
         r"A temporal RS object MUST have a member 'calendar'",
     ),
+    ("tiled-ndarray-missing-tilesets.json", TiledNdArray, r"tileSets\n.*Field required"),
+    ("tiled-ndarray-missing-urltemplate.json", TiledNdArray, r"urlTemplate\n.*Field required"),
+    ("tiled-ndarray-invalid-tileshape.json", TiledNdArray, r"Input should be a valid integer"),
 ]
 
 
