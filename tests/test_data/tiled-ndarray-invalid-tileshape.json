@@ -1,0 +1,24 @@
+{
+    "type": "TiledNdArray",
+    "dataType": "float",
+    "axisNames": [
+        "t",
+        "y",
+        "x"
+    ],
+    "shape": [
+        2,
+        5,
+        10
+    ],
+    "tileSets": [
+        {
+            "tileShape": [
+                "all",
+                null,
+                null
+            ],
+            "urlTemplate": "http://example.com/a/all.covjson"
+        }
+    ]
+}
