@@ -18,10 +18,11 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Scientific/Engineering :: GIS",
     "Typing :: Typed",
 ]
-version = "0.7.0"
+version = "0.8.0"
 dependencies = ["pydantic>=2.3,<3"]
 
 [project.optional-dependencies]
